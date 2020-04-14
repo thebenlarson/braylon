@@ -32,11 +32,11 @@ public class CustomerOrder {
 
     @ManyToOne
     @JoinColumn(name = "status_id")
-    private Customer status_id;
+    private OrderStatus status;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private User product_id;
+    private Product product;
     
     private LocalDateTime submission_date;
     
