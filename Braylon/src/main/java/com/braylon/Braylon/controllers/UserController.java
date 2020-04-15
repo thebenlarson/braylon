@@ -29,12 +29,12 @@ public class UserController {
     @GetMapping({"/","/landingPage"})
     public String displayHomePage() {
         
-        return "landingPage";
+        return "login/landingPage";
     }
     
     @GetMapping("/login")
     public String loginPage() {
-        return "login";
+        return "login/landingPage";
     }
     
 }
