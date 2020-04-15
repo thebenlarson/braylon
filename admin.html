@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+​
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="css/master.css"/>
+
+        <style>
+          h1, th, td{
+            text-align: center;
+            color: #01233f;
+          }
+          label, input {
+            color: #01233f;
+          }
+          label{
+            font-weight: bold;
+          }
+          input, select{
+            padding-left: 5px;
+            border-radius: 5px;
+            height: 35px;
+          }
+          .salesVisits, .salesPerformance{
+            padding-top: 20px;
+            padding-bottom: 20px;
+            border-radius: 15px 50px;
+            border-width: 1.5px;
+            border-style: solid;
+          }
+          .salesVisits{
+            border-color: #236baa;
+          }
+          .salesPerformance{
+            border-color: #074e8b;
+          }
+
+        </style>
+        <title>Braylon: Admin Page</title>
+    </head>
+    <body>
+        <div class="container">
+
+		<!---navigation bar--->
+		      <div class="navbar col-12">
+              <div class="nav-item col-md-3">
+                <a class="homeNav" href="#"><image class="homeImg" src="img/braylonLogo.png"/></a>
+              </div>
+              <div class="nav-item col-md-2">
+                <a class="adminNav" href="#"><button class="navBtn" type="submit" id="adminBtn" name="adminBtn">
+                  Admin</button></a>
+              </div>
+              <div class="nav-item col-md-2">
+                <a class="customerNav" href="#"><button class="navBtn" type="submit" id="customerBtn" name="customerBtn">
+                  Customers</button></a>
+              </div>
+              <div class="nav-item col-md-2">
+                <a class="orderNav" href="#"><button class="navBtn" type="submit" id="orderBtn" name="orderBtn">
+                  Orders</button></a>
+              </div>
+              <div class="dropdown nav-item col-md-2">
+                <button  class="navBtn" type="button" id="reportsBtn" name="reportsBtn">Reports</button>
+                <div class="dropdown-content">
+                  <a href="#">Sales Visits</a>
+                  <a href="#">Sales Performance</a>
+                </div>
+              </div>
+            </div>
+            <br>
+            <br>
+            <!---Sales Visit Table--->
+            <div class="salesVisits col-md-12">
+              <div class="salesVisitTable">
+                <h1>Sales Visits</h1>
+                <br>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th style="width:20%">Employee</th>
+                      <th style="width:20%">Customer</th>
+                      <th style="width:20%">Date</th>
+                      <th style="width:30%">Reason for Visit</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <td>Employee Name by ID</td>
+                        <td>Customer Name by ID</td>
+                        <td>Date</td>
+                        <td>Reason</td>
+                    </tr>
+                    <tr>
+                        <td>Employee Name by ID</td>
+                        <td>Customer Name by ID</td>
+                        <td>Date</td>
+                        <td>Reason</td>
+                    </tr>
+                    <tr>
+                        <td>Employee Name by ID</td>
+                        <td>Customer Name by ID</td>
+                        <td>Date</td>
+                        <td>Reason</td>
+                    </tr>
+                    <tr>
+                        <td>Employee Name by ID</td>
+                        <td>Customer Name by ID</td>
+                        <td>Date</td>
+                        <td>Reason</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <br>
+            <!---Sales Performance Table--->
+            <div class="salesPerformance col-md-12">
+              <div class="salesPerformanceTable">
+                <h1>Sales Performance</h1>
+                <br>
+                <div class="filter" style="float: right">
+                  <label for="search">Search By:</label>
+                  <select style="width: 150px;;height: 38px;" id="search" name="search">
+          						<option>option1</option>
+          						<option>option2</option>
+          						<option>option3</option>
+          					</select>
+                    <button class="btn btn-primary" type="submit" href="#">Submit</button>
+                </div>
+                  <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>EmployeeId</th>
+                      <th>Employee Name</th>
+                      <th>Total Sales Visits</th>
+                      <th>Total Sales Completed</th>
+                      <th>Weekly Sales</th>
+                      <th>Monthly Sales</th>
+                      <th>YTD</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                        <td>data</td>
+                    </tr>
+                    <tr>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                    </tr>
+                    <tr>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                    </tr>
+                    <tr>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                      <td>data</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>
