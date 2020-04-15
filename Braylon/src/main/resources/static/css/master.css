@@ -38,7 +38,7 @@ body{
     color: #a1d3ff;
   }
   
-  .navbar{
+  .navbar, .container{
     border-radius: 15px 50px;
     border-width: 1.5px;
     border-color: #a1d3ff;
