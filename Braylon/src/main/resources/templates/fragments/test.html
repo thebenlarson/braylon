@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::title}, ~{::section})">
+<head>
+    <title>Welcome to My Site</title>
+</head>
+<body>
+
+    <section>
+        <p>This is just an extra text.</p>
+        <a th:href="@{/contact-us}">Contact Us</a>
+    </section>
+
+</body>
+</html>

@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en"
 xmlns="http://www.w3.org/1999/xhtml"
-xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: layout(~{::title}, ~{::section})">
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <!-- Required Meta Tags -->
