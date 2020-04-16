@@ -5,15 +5,15 @@
  */
 package com.braylon.Braylon.repositories;
 
-import com.braylon.Braylon.entities.Role;
+import com.braylon.Braylon.entities.VisitPurpose;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ *
+ * @author DEV10
+ */
 @Repository
-public interface RoleRepo extends JpaRepository<Role, Integer> {
-    
-    Role getRoleByRole(String role);
-    
-    //Role getByroleId(int id);
+public interface VisitPurposeRepo extends JpaRepository<VisitPurpose, Integer>{
     
 }

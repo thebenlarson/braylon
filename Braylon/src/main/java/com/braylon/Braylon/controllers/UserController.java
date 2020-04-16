@@ -5,8 +5,11 @@
  */
 package com.braylon.Braylon.controllers;
 
+import com.braylon.Braylon.entities.Role;
+import com.braylon.Braylon.entities.User;
 import com.braylon.Braylon.repositories.RoleRepo;
 import com.braylon.Braylon.repositories.UserRepo;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,9 +35,18 @@ public class UserController {
         return "login/landingPage";
     }
     
+    
+    
     @GetMapping("/login")
-    public String loginPage() {
-        return "login/landingPage";
+    public String login() {
+        
+        List<Role> roleList = roles.findAll();
+        System.out.println(roleList);
+        
+        User userList = users.findById(100000001).orElse(null);
+        System.out.println(userList);
+        
+        return "login/loginPage";
     }
     
 }
