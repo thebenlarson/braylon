@@ -30,16 +30,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     UserRepo users;
     
     @Override
-    public UserDetails loadUserByUsername(String lastName) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         
-       //int employeeId = Integer.parseInt(employee_id);
-        
-       //User user = users.findById(employeeId).orElse(null);
-       
-       User user = users.findUserBylastName(lastName);
+       User user = users.findUserByUsername(username);
         
         if (user == null) {
-            throw new UsernameNotFoundException("No User found for " + lastName + ".");
+            throw new UsernameNotFoundException("No User found for " + username + ".");
         }
         
         
@@ -48,8 +44,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
         
-        String username = Integer.toString(user.getEmployee_id());
         
-        return new org.springframework.security.core.userdetails.User(username, user.getPassword(), grantedAuthorities);
+        
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), grantedAuthorities);
     }
 }
