@@ -42,12 +42,14 @@ public class AdminController {
     }
     
     @PostMapping("/addUser")
-    public String addUser(int employee_id, String password) {
+    public String addUser(int employee_id, String password, String first_name, String last_name) {
         User user = new User();
         // Need to create a method to automatically assign employee id
         user.setEmployee_id(employee_id);
         // Create Password and Set in DB
         user.setPassword(password);
+        user.setFirstName(first_name);
+        user.setLastName(last_name);
         user.setEnabled(true);
         
         Set<Role> userRoles = new HashSet<>();
@@ -78,8 +80,11 @@ public class AdminController {
     
     
     @PostMapping(value="/editUser")
-    public String editUserAction(String[] roleIdList, Boolean enabled, Integer employee_id) {
+    public String editUserAction(String[] roleIdList, Boolean enabled, Integer employee_id, String first_name, String last_name) {
         User user = users.findById(employee_id).orElse(null);
+        
+        user.setFirstName(first_name);
+        user.setLastName(last_name);
         
         if(enabled != null) {
             user.setEnabled(enabled);
@@ -98,6 +103,6 @@ public class AdminController {
         return "redirect:/admin";
         
     }
-*/
-    
+
+    */
 }
