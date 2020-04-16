@@ -52,10 +52,10 @@ public class CustomerController {
             model.addAttribute("customer", new Customer());
         }
 
-        model.addAttribute("state", states);
+        model.addAttribute("states", states);
 
         // Return the view
-        return "customerInfo/customerinfo.html";
+        return "customerInfo/index"; //spoke with Amir and changed this
 
     }
 
@@ -83,7 +83,7 @@ public class CustomerController {
         // Flag 'created' to true so a message appears on the view
         redirAttr.addFlashAttribute("created", true);
 
-        return "redirect:/customers";
+        return "redirect:/index"; //spoke with Amir and changed this
 
     }
 
