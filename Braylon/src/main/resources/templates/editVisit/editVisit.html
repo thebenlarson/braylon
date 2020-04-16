@@ -28,19 +28,7 @@
             border-radius: 5px;
             height: 35px;
           }
-          .salesVisits, .newVisit{
-            padding-top: 20px;
-            padding-bottom: 20px;
-            border-radius: 15px 50px;
-            border-width: 1.5px;
-            border-style: solid;
-          }
-          .salesVisits{
-            border-color: #074e8b;
-          }
-          .newVisit{
-            border-color: #236baa;
-          }
+
 
         </style>
         <title>Braylon: Edit Sales Visit</title>
@@ -78,21 +66,30 @@
             <br>
 			<!-------------- Table data Section ---------------->
 
-      			<div class="newVisit col-md-12" >
-              <h1>Schedule New Sales Visits</h1>
+      			<div class="frame1 col-md-12" >
+              <h1>Edit Sales Visit</h1>
               <br>
       			<form type="form" autocomplete="off">
+              <input type="hidden" id="visit_id" name="visit_id"
+              th:value="${salesVisit.visit_id}"/>
+              <input type="hidden" id="employee" name="employee"
+              th:value="${salesVisit.user.employee_id}"/>
               <div class="form-row col-md-12">
                 <div class="form-item col-md-6">
                   <label style="font-height: 15px;">Employee:</label>
                   <select style="width: 75%;" id="employeeId" name="employeeId">
-                    <option value="" disabled selected>Employee</option>
+                    <option th:value="${salesVisit.user.employee_id}" th:text="" disabled selected>Employee</option>
                   </select>
                 </div>
                 <div class="form-item col-md-6" align="right">
                   <label style="font-height: 15px;">Customer:</label>
                   <select style="width: 75%;" id="customerId" name="customerId">
-                    <option value="" disabled selected>Customer</option>
+                    <option th:value="${salesVisit.customer.customer_id}"
+                    selected th:text="${salesVisit.customer.company + ' -- ' + salesVisit.customer.contact}"></option>
+                    <option th:each="customer : ${customers}"
+                            th:value="${customer.customer_id}"
+                            th:text="${customer.company + ' -- ' + customer.contact}">
+                            Customer</option>
                   </select>
                 </div>
               </div>
@@ -100,43 +97,29 @@
               <div class="form-row col-md-12">
                 <div class="form-item col-md-3">
                   <label style="font-height: 15px;">Date:</label>
-                  <input style="width:66%;" type="date" name="date" value=""/>
+                  <input style="width:66%;" type="date" name="visitDate"
+                  id="visitDate" value="${salesVisit.visit_date}"/>
                 </div>
                 <div class="form-item col-md-3">
                   <label style="font-height: 15px;">Time:</label>
-                  <select style="width: 66%;" id="time" name="time">
-                    <option disabled selected>--Select--</option>
-                    <option value="">9:00 AM</option>
-                    <option value="">9:30 AM</option>
-                    <option value="">10:00 AM</option>
-                    <option value="">10:30 AM</option>
-                    <option value="">11:00 AM</option>
-                    <option value="">11:30 AM</option>
-                    <option value="">1:00 PM</option>
-                    <option value="">1:30 PM</option>
-                    <option value="">2:00 PM</option>
-                    <option value="">2:30 PM</option>
-                    <option value="">3:00 PM</option>
-                    <option value="">3:30 PM</option>
+                  <select style="width: 66%;" id="time" name="visitTime">
+                    <option selected th:value="${salesVisit.visit_time}"></option>
+                    <option th:each="visitTime : ${visitTimes}"
+                            th:value="visitTime.time_id">Time</option>
                   </select>
                 </div>
                 <div class="form-item col-md-6" align="right">
                   <label style="font-height: 15px;">Purpose:</label>
                   <select style="width: 75%;" id="employeeId" name="employeeId">
-                    <option disabled selected>--Select--</option>
-                    <option value="">Purpose</option>
+                    <option selected th:value="salesVisit.visitPurpose.purpose_id"
+                            th:text="salesVisit.visitPurpose.purpose_name"></option>
+                    <option th:each="visitPurpose : ${visitPurposes}"
+                            th:value="visitPurpose.purpose_id"
+                            th:text="visitPurpose.purpose_name">Purpose</option>
                   </select>
                 </div>
               </div>
               <br>
-              <div class="form-row col-md">
-                <div class="form-item col-md-12">
-                  <label style="font-height: 15px;">Notes:</label>
-                  <input style="width: 100%; height: 120px; padding-bottom: 80px;"
-                  type="textarea" id="notes" name="notes" value="" placeholder="Additional Notes"/>
-                </div>
-              </div>
-                <br>
               <div class="col-md-12" align="right">
                 <button class="col-md-2" type="submit" id="btn" name="button">Schedule</button>
               </div>
