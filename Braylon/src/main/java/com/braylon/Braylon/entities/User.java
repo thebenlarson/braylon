@@ -30,6 +30,8 @@ public class User {
   @Size(max = 9, message = "Only 9 characters allowed")
   @NotBlank(message = "Field must not be blank")
   private int employee_id;
+    
+  private String username;
 
   @Basic(optional = false)
   @NotNull
