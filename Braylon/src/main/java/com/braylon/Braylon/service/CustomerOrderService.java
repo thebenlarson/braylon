@@ -21,7 +21,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Sort;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CustomerOrderService {
 
     @Autowired
@@ -69,7 +71,7 @@ public class CustomerOrderService {
             return orders.findAll();
         }
 
-        return orders.findAllByEmployee_Id(user.getEmployee_id(), Sort.by(Sort.Direction.ASC, "order_id"));
+        return orders.findAllByUser(user, Sort.by(Sort.Direction.ASC, "order_id"));
     }
 
     public List<CustomerOrder> getAllOrders() {
@@ -77,7 +79,7 @@ public class CustomerOrderService {
     }
 
     public List<CustomerOrder> getOrdersByCustomerId(Customer customer) {
-        return orders.findAllByCustomer_Id(customer.getCustomer_id(), Sort.by(Sort.Direction.ASC, "order_id"));
+        return orders.findAllByCustomer(customer, Sort.by(Sort.Direction.ASC, "order_id"));
     }
 
     public CustomerOrder getOrderById(int order_id) {
