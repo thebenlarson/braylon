@@ -5,78 +5,73 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <head>
         <div th:replace="fragments/layout:: head-links"></div>
-		<style>
-			/*:root{
-				--dark-grey: #939393;
-				--light-blue: #8dcaff;
-				--medium-blue: #4c96d7;
-				--dark-blue: #083b66;
-			}*/
-			table{
-				width: 90%;
-				margin: 0 auto;
-				border-style: solid 
-			}
-			h1{
-				text-align: center;
-			}
-			.filter{
-				margin-right: 50px;
-			}
-			option{
-				backgound-color: #8dcaff;
-			}
-			button{
-				font-size: 13px;
-				font-weight: bold;
-				backgound-color: #8dcaff;
-			}
-			th, td{
-				text-align:center;
-			}
-                        
-		
-		</style>
-		
+        <style>
+            /*:root{
+                    --dark-grey: #939393;
+                    --light-blue: #8dcaff;
+                    --medium-blue: #4c96d7;
+                    --dark-blue: #083b66;
+            }*/
+            table{
+                width: 90%;
+                margin: 0 auto;
+                border-style: solid 
+            }
+            h1{
+                text-align: center;
+            }
+            .filter{
+                margin-right: 50px;
+            }
+            option{
+                backgound-color: #8dcaff;
+            }
+            button{
+                font-size: 13px;
+                font-weight: bold;
+                backgound-color: #8dcaff;
+            }
+            th, td{
+                text-align:center;
+            }
+
+
+        </style>
+
         <title>Braylon: Sales Performance</title>
     </head>
     <body>
-        
+
         <div th:replace="fragments/layout:: navbar"></div>
-        
-			<!-------------- Table data Section ---------------->
-			<div class="container">
-			<h1>Sales Performance</h1>
-			
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Employee ID</th>
-						<th>Employee Name</th>
-						<th>Total Sales Visits</th>
-						<th>Total Sales completed</th>
-						<th>WTD</th>
-						<th>MTD</th>
-						<th>YTD</th>
-					</tr>
-				</thead>
-				<tbody>
-                                    <!--<tr th:each="user : ${users}">-->
-                                        <td th:text="${user.employeeId}"></td><!--user-->
-                                        <td th:text="${user.employeeName}"></td><!--user-->
-                                        <td th:text="${userSalesVisits.size}"></td><!--or have back end(salesVisits) send integer-->
-                                        <td th:text="${numSubmittedOrdersByUser}"></td><!--Orders-->
-                                        <td th:text="${submittedOrdersByUserIdInLast7Days}"></td><!--Orders-->
-                                        <td th:text="${submittedOrdersByUserIdInLastMonth}"></td><!--Orders-->
-                                        <td th:text="${submittedOrdersByUserIdInLastYear}"></td><!--Orders-->
-                                        
-                                        
-				</tbody>
-                            
-                            
-			</table>
-	
-		 </div>
+
+        <!-------------- Table data Section ---------------->
+        <div class="container">
+            <h1>Sales Performance</h1>
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Employee ID</th>
+                        <th>Employee Name</th>
+                        <th>Total Sales Visits</th>
+                        <th>Total Sales completed</th>
+                        <th>WTD</th>
+                        <th>MTD</th>
+                        <th>YTD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--<tr th:each="user : ${users}">-->
+                    <td th:text="${user.employeeId}"></td><!--user-->
+                    <td th:text="${user.employeeName}"></td><!--user-->
+                    <td th:text="${userSalesVisits.size}"></td><!--or have back end(salesVisits) send integer-->
+                    <td th:text="${numSubmittedOrdersByUser}"></td><!--Orders-->
+                    <td th:text="${submittedOrdersByUserIdInLast7Days}"></td><!--Orders-->
+                    <td th:text="${submittedOrdersByUserIdInLastMonth}"></td><!--Orders-->
+                    <td th:text="${submittedOrdersByUserIdInLastYear}"></td><!--Orders-->
+                </tbody>
+            </table>
+        </div>
 
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
