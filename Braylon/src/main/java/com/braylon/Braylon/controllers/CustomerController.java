@@ -71,7 +71,7 @@ public class CustomerController {
         if (result.hasErrors()) {
 
             // Add customer to the model 
-            redirAttr.addFlashAttribute("org.springframework.validation.BindingResult.customer", result);
+            redirAttr.addFlashAttribute("result", result);
             redirAttr.addFlashAttribute("customer", customer);
 
             // Redirect
