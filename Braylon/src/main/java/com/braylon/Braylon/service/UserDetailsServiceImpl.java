@@ -29,21 +29,27 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     UserRepo users;
     
-    
-    
     @Override
-    public UserDetails loadUserByUsername(String employee_id) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String lastName) throws UsernameNotFoundException {
         
-        int employeeId = Integer.parseInt(employee_id);
+       //int employeeId = Integer.parseInt(employee_id);
         
-        User user = users.findById(employeeId).orElse(null);
+       //User user = users.findById(employeeId).orElse(null);
+       
+       User user = users.findUserBylastName(lastName);
+        
+        if (user == null) {
+            throw new UsernameNotFoundException("No User found for " + lastName + ".");
+        }
+        
         
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         for(Role role : user.getRoles()) {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRole()));
         }
         
+        String username = Integer.toString(user.getEmployee_id());
         
-        return new org.springframework.security.core.userdetails.User(employee_id, user.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(username, user.getPassword(), grantedAuthorities);
     }
 }
