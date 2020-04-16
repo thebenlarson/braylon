@@ -5,12 +5,15 @@
  */
 package com.braylon.Braylon.repositories;
 
-import com.braylon.Braylon.entities.User;
+import com.braylon.Braylon.entities.VisitTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ *
+ * @author DEV10
+ */
 @Repository
-public interface UserRepo extends JpaRepository<User, Integer>{
-    
+public interface VisitTimeRepo extends JpaRepository<VisitTime, Integer>{
     
 }

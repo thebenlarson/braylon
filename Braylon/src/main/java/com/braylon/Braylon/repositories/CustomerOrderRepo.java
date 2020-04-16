@@ -19,5 +19,4 @@ public interface CustomerOrderRepo extends JpaRepository<CustomerOrder, Integer>
     public List<CustomerOrder> findAllByUser(User user, Sort sort);
 
     public List<CustomerOrder> findAllByCustomer(Customer customer, Sort sort);
-
 }
