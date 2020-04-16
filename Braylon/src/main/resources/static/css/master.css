@@ -38,13 +38,24 @@ body{
     color: #a1d3ff;
   }
 
-  .navbar{
+  .navbar, .frame1, .frame2, .frame3{
     border-radius: 15px 50px;
     border-width: 1.5px;
-    border-color: #a1d3ff;
     border-style: solid;
     padding-top: 15px;
     padding-bottom: 15px;
+  }
+  .navbar{
+    border-color: #a1d3ff;
+  }
+  .frame1{
+    border-color: #236baa;
+  }
+  .frame2{
+    border-color: #074e8b;
+  }
+  .frame3 {
+    border-color: #083b66;
   }
 
   .dropdown {
