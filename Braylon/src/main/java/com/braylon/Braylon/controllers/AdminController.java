@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AdminController {
     
-    /*
+    
     
     @Autowired
     UserRepo users;
@@ -36,10 +36,13 @@ public class AdminController {
    
     
     @GetMapping("/admin")
-    public String displayAdminPage(Model model) {
-        model.addAttribute("users", users.findAll());
-        return "admin";
+    public String displayAdminPage() {
+        // Add in later but getting mapping done
+        //model.addAttribute("users", users.findAll());
+        return "admin/admin";
     }
+    
+    /*
     
     @PostMapping("/addUser")
     public String addUser(int employee_id, String password, String first_name, String last_name) {
