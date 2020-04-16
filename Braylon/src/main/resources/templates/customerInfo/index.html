@@ -7,94 +7,86 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <title>Landing Page</title>
   </head>
   <body>
-    <div th:replace="fragments/layout:: navbar"></div>
-        <div class="container col-10">
+    <div class="container">
+        <div th:replace="fragments/layout:: navbar"></div>
+        <div class="frame1">
             <h1> Customers</h1>
-                <div class="row justify-content-end">
+            <div class="row justify-content-end">
                 <form class="search">
                     <label for="search">Search By:</label>
                     <select id="search" name="search">
                         <option>option1</option>
                         <option>option2</option>
                         <option>option3</option>
-                    </select>
+                    </select>   
                     <button class="button" href="#" >Search</button>
                 </form>
             </div>
-            <div class="row">
-                <table class="col-12">
-                    <tr>
-                        <th>Company</th>
-                        <th>Contact</th>
-                        <th>Phone</th>
-                        <th>Email</th>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Company 1</a></td>
-                        <td>Person 1</td>
-                        <td>555-555-5555</td>
-                        <td>person1@fake.notreal</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Company 2</a></td>
-                        <td>Person 2</td>
-                        <td>555-555-5555</td>
-                        <td>person2@fake.notreal</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Company 3</a></td>
-                        <td>Person 3</td>
-                        <td>555-555-5555</td>
-                        <td>person3@fake.notreal</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Company 4</a></td>
-                        <td>Person 4</td>
-                        <td>555-555-5555</td>
-                        <td>person4@fake.notreal</td>
-                    </tr>
-                
-                </table>
+                <div class="row">
+                    <table class="col-12">
+                        <tr>
+                            <th>Company</th>
+                            <th>Contact</th>
+                            <th>Address</th>
+                            <th>City</th>
+                            <th>State</th>
+                            <th>Phone</th>
+                            <th>Email</th>
+                        </tr>
+                        <tbody>
+                            <tr th:each="customer : ${customers}">
+                                <td th:text="${customer.company}"></td>
+                                <td th:text="${customer.contact}"></td>
+                                <td th:text="${customer.phone}"></td>
+                                <td th:text="${customer.address}"></td>
+                                <td th:text="${customer.city}"></td>
+                                <td th:text="${customer.state.name}"></td>
+                                <td th:text="${customer.email}"></td>
+                            </tr>      
+                        </tbody>          
+                    </table>
+                </div>
             </div>
         </div>
+                
 
-        <div class="form container col-10" id="add-user-below">
-            <form>
-                <h3>Add Customer</h3>
-                <div class="form-group">
-                    <label>Company</label>
-                    <input type="text" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Contact</label>
-                    <input type="text" class="form-control"  required>
-                </div>
-                <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" class="form-control"  required>
-                </div>
-                <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-control"  required>
-                </div>
-                <div class="form-group">
-                    <label>State</label>
-                    <input type="text" class="form-control"  required>
-                </div>
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="text" class="form-control"  required>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="text" class="form-control"  required>
-                </div>
-                <div class="form-group">
-                    <button type="reset" class="cancel-button" id="cancel-customer-below">Cancel</button>
-                    <button type="submit" class="button">Add Customer</button>
-                </div>
-            </form>	
-        </div>  
+            <div class="form container col-10" id="add-user-below">
+                <form method="POST" action="#" th:action="@{/customers}">
+                    <h3>Add Customer</h3>
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" class="form-control" th:value="${customer.company}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact</label>
+                        <input type="text" class="form-control" th:value="${customer.contact}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control" th:value="${customer.address}"  required>
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" class="form-control" th:value="${customer.city}"  required>
+                    </div>
+                    <div class="form-group">
+                        <label>State</label>
+                        <input type="text" class="form-control" th:value="${customer.state.name}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone</label>
+                        <input type="text" class="form-control" th:value="${customer.phone}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="text" class="form-control" th:value="${customer.email}" required>
+                    </div>
+                    <div class="form-group">
+                        <button type="reset" class="cancel-button" id="cancel-customer-below">Cancel</button>
+                        <button type="submit" class="button">Add Customer</button>
+                    </div>
+                </form>	
+            </div>  
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
