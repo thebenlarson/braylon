@@ -7,6 +7,7 @@ package com.braylon.Braylon.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -32,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http    
                 .authorizeRequests()
                     .antMatchers("/admin").hasRole("ADMIN")
-                    .antMatchers("/", "/home", "/login/landingPage").permitAll()
+                    .antMatchers("/", "/home", "/landingPage", "/**").permitAll()
                     .antMatchers("/css/**", "/img/**", "/js/**", "/fonts/**", "/templates/**").permitAll()
                     .anyRequest().hasRole("USER")
                 .and()
@@ -46,6 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll(); 
     
     
+    }
+    
+    @Autowired
+    public void configureGlobalInDB(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetails);
     }
     
 }
