@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     $('#edit-customer-button').click(function(){
-        $('#new-customer-form :input').prop('disabled', false);
+        $('#edit-customer-form :input').prop('disabled', false);
         $('#update-customer-button').show();
         $('#reset-customer-button').show();
         $('#edit-customer-button').hide();

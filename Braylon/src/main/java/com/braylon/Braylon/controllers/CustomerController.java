@@ -33,7 +33,7 @@ public class CustomerController {
      *
      * shows the customer list and create customer form
      */
-    @GetMapping("customers")
+    @GetMapping("/customers")
     public String showCustomerList(Model model) {
 
         // Get the customer list
@@ -64,7 +64,7 @@ public class CustomerController {
      * creating a new customer this method can redirect user to the
      * "showCustomerList" method
      */
-    @PostMapping("customers")
+    @PostMapping("/customers")
     public String addCustomer(@Valid Customer customer, BindingResult result, RedirectAttributes redirAttr) {
 
         // for validation BindingResult (erros in validation)
@@ -92,7 +92,7 @@ public class CustomerController {
      * editing a existing customer
      *
      */
-    @GetMapping("customer/{id}/edit")
+    @GetMapping("customer/{id}")
     public String showEditForm(@PathVariable("id") int id, Model model) {
 
         // Find motorcycle by id
@@ -111,14 +111,14 @@ public class CustomerController {
 
             }
             
-            model.addAttribute("state", states);
+            model.addAttribute("states", states);
 
             // Show the edit form
-            return "customer.html";
+            return "customerInfo/view";
         }
 
         // Redirect to the view
-        return "redirect:/customers";
+        return "redirect:customerInfo/view";
     }
     
     
@@ -141,7 +141,7 @@ public class CustomerController {
             redirAttr.addFlashAttribute("customer", customer);
 
             // Redirect
-            return "redirect:/customer/" + id + "/edit";
+            return "redirect:/customer/" + id ;
         }
 
         this.customerService.save(customer);
@@ -149,7 +149,7 @@ public class CustomerController {
         // view appears with 'updated' message 
         redirAttr.addFlashAttribute("updated", true);
 
-        return "redirect:/customers";
+        return "redirect:/customer/" + id;
 
     }
     

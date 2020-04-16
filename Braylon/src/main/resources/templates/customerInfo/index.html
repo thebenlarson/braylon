@@ -4,52 +4,36 @@ xmlns:th="http://www.thymeleaf.org"
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <div th:replace="fragments/layout:: head-links"></div>
-    <title>Landing Page</title>
+    <title>Customer Index</title>
   </head>
   <body>
     <div class="container">
         <div th:replace="fragments/layout:: navbar"></div>
         <div class="frame1">
             <h1> Customers</h1>
-            <div class="row justify-content-end">
-                <form class="search">
-                    <label for="search">Search By:</label>
-                    <select id="search" name="search">
-                        <option>option1</option>
-                        <option>option2</option>
-                        <option>option3</option>
-                    </select>   
-                    <button class="button" href="#" >Search</button>
-                </form>
-            </div>
+            <input type="text" id="customerSearch" placeholder="Search By Company"> 
                 <div class="row">
-                    <table class="col-12">
+                    <table class="table table-striped">
                         <tr>
                             <th>Company</th>
                             <th>Contact</th>
-                            <th>Address</th>
-                            <th>City</th>
-                            <th>State</th>
                             <th>Phone</th>
                             <th>Email</th>
                         </tr>
-                        <tbody>
+                        <tbody id="customerTable">
                             <tr th:each="customer : ${customers}">
-                                <td th:text="${customer.company}"></td>
+                                <td ><a th:href="@{customer/{id}(id=${customer.customer_id})}" th:text="${customer.company}"></a></td>
                                 <td th:text="${customer.contact}"></td>
                                 <td th:text="${customer.phone}"></td>
-                                <td th:text="${customer.address}"></td>
-                                <td th:text="${customer.city}"></td>
-                                <td th:text="${customer.state.name}"></td>
                                 <td th:text="${customer.email}"></td>
                             </tr>      
                         </tbody>          
                     </table>
                 </div>
             </div>
-        </div>
+   
                 
-
+        <div class="frame2">
             <div class="form container col-10" id="add-user-below">
                 <form method="POST" action="#" th:action="@{/customers}">
                     <h3>Add Customer</h3>
@@ -69,10 +53,11 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                         <label>City</label>
                         <input type="text" class="form-control" th:value="${customer.city}"  required>
                     </div>
-                    <div class="form-group">
-                        <label>State</label>
-                        <input type="text" class="form-control" th:value="${customer.state.name}" required>
-                    </div>
+                    <label for="state">State</label>
+                    <select name="state" id="state">
+                        <option th:each="state : ${states}" th:value="${state.name}" 
+                         th:text="${state.name}"></option>
+                    </select>
                     <div class="form-group">
                         <label>Phone</label>
                         <input type="text" class="form-control" th:value="${customer.phone}" required>
@@ -87,9 +72,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                 </form>	
             </div>  
+        </div>
+    </div>
+            
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
+    <script type="text/javascript" src="/js/customerIndex.js"></script>
+  
+</body>
 </html>
