@@ -17,9 +17,7 @@ import lombok.Data;
 @Entity
 @Data
 public class CustomerOrder {
-    
-    //Hi Joe!
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int order_id;
