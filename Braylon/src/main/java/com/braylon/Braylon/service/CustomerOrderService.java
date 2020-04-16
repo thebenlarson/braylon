@@ -39,66 +39,66 @@ public class CustomerOrderService {
     @Autowired
     RoleRepo roles;
 
-//    public CustomerOrder saveCustomerOrder(CustomerOrder order) {
-//        return orders.save(order);
-//    }
-//
-//    public List<OrderStatus> getStatuses() {
-//        return statuses.findAll();
-//    }
-//
-//    public List<OrderStatus> getUserStatuses() {
-//        List<OrderStatus> complete = statuses.findAll();
-//        return complete.stream()
-//                .filter(status -> status.getStatus_name().equals("Cancelled"))
-//                .filter(status -> status.getStatus_name().equals("Approved"))
-//                .filter(status -> status.getStatus_name().equals("Completed"))
-//                .collect(Collectors.toList());
-//
-//    }
-//
-//    public List<Product> getProducts() {
-//        return products.findAll();
-//    }
-//
-//    public List<Customer> getCustomer() {
-//        return customers.findAll();
-//    }
-//
-//    public List<CustomerOrder> getOrdersByEmployeeId(User user) {
-//
-//        if (user.getRoles().contains(roles.getOne(1))) {
-//            return orders.findAll();
-//        }
-//
-//        return orders.findAllByEmployee_Id(user.getEmployee_id(), Sort.by(Sort.Direction.ASC, "order_id"));
-//    }
-//
-//    public List<CustomerOrder> getAllOrders() {
-//        return orders.findAll(Sort.by(Sort.Direction.ASC, "order_id"));
-//    }
-//
-//    public List<CustomerOrder> getOrdersByCustomerId(Customer customer) {
-//        return orders.findAllByCustomer_Id(customer.getCustomer_id(), Sort.by(Sort.Direction.ASC, "order_id"));
-//    }
-//
-//    public CustomerOrder getOrderById(int order_id) {
-//        return orders.getOne(order_id);
-//    }
-//
-//    public User getUserById(int id) {
-//        return users.getOne(id);
-//    }
-//
-//    public Product getProductById(int id) {
-//        return products.getOne(id);
-//    }
-//
-//    public OrderStatus getStatusById(int id) {
-//        return statuses.getOne(id);
-//    }
-//
-//    public Customer getCustomerById(int id) {
-//        return customers.getOne(id);
-//    }
+    public CustomerOrder saveCustomerOrder(CustomerOrder order) {
+        return orders.save(order);
+    }
+
+    public List<OrderStatus> getStatuses() {
+        return statuses.findAll();
+    }
+
+    public List<OrderStatus> getUserStatuses() {
+        List<OrderStatus> complete = statuses.findAll();
+        return complete.stream()
+                .filter(status -> status.getStatus_name().equals("Cancelled"))
+                .filter(status -> status.getStatus_name().equals("Approved"))
+                .filter(status -> status.getStatus_name().equals("Completed"))
+                .collect(Collectors.toList());
+
+    }
+
+    public List<Product> getProducts() {
+        return products.findAll();
+    }
+
+    public List<Customer> getCustomer() {
+        return customers.findAll();
+    }
+
+    public List<CustomerOrder> getOrdersByEmployeeId(User user) {
+
+        if (user.getRoles().contains(roles.getOne(1))) {
+            return orders.findAll();
+        }
+
+        return orders.findAllByUser(user, Sort.by(Sort.Direction.ASC, "order_id"));
+    }
+
+    public List<CustomerOrder> getAllOrders() {
+        return orders.findAll(Sort.by(Sort.Direction.ASC, "order_id"));
+    }
+
+    public List<CustomerOrder> getOrdersByCustomerId(Customer customer) {
+        return orders.findAllByCustomer(customer, Sort.by(Sort.Direction.ASC, "order_id"));
+    }
+
+    public CustomerOrder getOrderById(int order_id) {
+        return orders.getOne(order_id);
+    }
+
+    public User getUserById(int id) {
+        return users.getOne(id);
+    }
+
+    public Product getProductById(int id) {
+        return products.getOne(id);
+    }
+
+    public OrderStatus getStatusById(int id) {
+        return statuses.getOne(id);
+    }
+
+    public Customer getCustomerById(int id) {
+        return customers.getOne(id);
+    }
 }
