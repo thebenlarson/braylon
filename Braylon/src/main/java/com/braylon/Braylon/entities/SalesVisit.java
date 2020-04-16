@@ -5,7 +5,9 @@
  */
 package com.braylon.Braylon.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,12 +15,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Data
 public class SalesVisit {
 
-    @Id
+   @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  
     private int visit_id;
     
@@ -30,7 +33,16 @@ public class SalesVisit {
     @JoinColumn(name = "employee_id")
     private User user;
     
-    private LocalDateTime visit_date;
+    @ManyToOne
+    @JoinColumn(name = "purpose_id")
+    private VisitPurpose purpose;
     
-    private String notes;
+    @ManyToOne
+    @JoinColumn(name = "time_id")
+    private VisitTime time;
+    
+    @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate visit_date;
+    
 }
