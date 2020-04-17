@@ -34,22 +34,22 @@
 		<!-------------------navigation bar------------------->
 		      <div class="navbar col-12">
               <div class="nav-item col-md-3">
-                <a class="homeNav" href="#"><image class="homeImg" src="img/braylonLogo.png"/></a>
+                <a class="homeNav" th:href="dashboard"><image class="homeImg" src="img/braylonLogo.png"/></a>
               </div>
               <div class="nav-item col-md-2">
-                <a class="adminNav" href="#"><button class="navBtn" type="submit" id="adminBtn" name="adminBtn">
+                <a class="adminNav" th:href="admin"><button class="navBtn" type="submit" id="adminBtn" name="adminBtn">
                   Admin</button></a>
               </div>
               <div class="nav-item col-md-2">
-                <a class="customerNav" href="#"><button class="navBtn" type="submit" id="customerBtn" name="customerBtn">
+                <a class="customerNav" th:href="customers"><button class="navBtn" type="submit" id="customerBtn" name="customerBtn">
                   Customers</button></a>
               </div>
               <div class="nav-item col-md-2">
-                <a class="orderNav" href="#"><button class="navBtn" type="submit" id="orderBtn" name="orderBtn">
+                <a class="orderNav" th:href="customerOrders"><button class="navBtn" type="submit" id="orderBtn" name="orderBtn">
                   Orders</button></a>
               </div>
               <div class="nav-item col-md-2">
-                <a class="visitsNav" href="#"><button class="navBtn" type="submit" id="visitBtn" name="visitBtn">
+                <a class="visitsNav" th:href="salesVisits"><button class="navBtn" type="submit" id="visitBtn" name="visitBtn">
                   Visits</button></a>
               </div>
               <div class="col-md-12">
@@ -112,6 +112,8 @@
         <div class="frame2 col-md-12">
           <div class="salesVisitTable">
             <h1>Sales Visits</h1>
+            <label for="searchBar"><i class="material-icons">search</i></label>
+            <input type="text" id="visitSearch" placeholder="Search"/>
             <br>
             <table class="table table-striped">
               <thead>
@@ -134,12 +136,16 @@
                   <td th:text="${visit.purpose.purpose_name}">Purpose</td>
                   <td>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-btn-danger"
-                    style="color: #FFFFFF; background-color: #CD5C5C;"
-                    data-toggle="modal" data-target="#exampleModal">
-                      Delete Visit
-                    </button>
-                    <!-- Modal -->
+                    <a class="btn btn-danger" href="#" th:href="@{deleteVisit(id=${visit.visit_id})}">
+                        Delete Visit
+                        </a>
+<!--                       <button type="button" class="btn btn-btn-danger">
+                  style="color: #FFFFFF; background-color: #CD5C5C;"
+                    data-toggle="modal" data-target="#exampleModal"
+                     
+                  </button>
+
+                    Modal 
                     <div class="modal fade modal-lg" id="exampleModal"
                     tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                     aria-hidden="true">
@@ -154,23 +160,26 @@
                             </button>
                           </div>
                           <div class="modal-body">
+                               <input type="hidden" name="_csrf" th:value="${_csrf.token}"/> 
                             <p>Do you want to permanently delete this scheduled visit?</p>
-                            <form type="form" action="deleteVisit" method="POST"
-                            class="form-row">
+                    
                             <input type="hidden" id="employee"
-                            name="employee" th:value="${employee.employee_id}"/>
-                                <input type="hidden" id="visit_id" name="visit_id"
-                                th:value="${salesVisit.visit_id}"/>
-                                <button class="btn btn-danger">Delete</button>
+                            name="employee" th:value="${visit.user.employee_id}"/>
+                            <input type="hidden" id="visit" name="visit"
+                                th:value="${visit.visit_id}"/> 
+                                <a class="btn btn-danger" href="#" th:href="@{deleteVisit(id=${visit.visit_id})}">  
+                                      Delete
+                                </a>
                                 <span style="padding-left: 10px; padding-right: 10px;">
                                 </span>
                                 <button type="button" class="btn btn-secondary"
                                 data-dismiss="modal">Close</button>
-                            </form>
+                           
+                      
                           </div>
                         </div>
                       </div>
-                    </div>
+                   </div>-->
                   </td>
                     <td>
                       <a href="#" th:href="@{editVisit(id=${visit.visit_id})}"><button class="btn btn-secondary" type="submit">
@@ -184,9 +193,10 @@
 		 </div>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="js/sales.js"></script>
+        
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+        <script src="js/sales.js"></script>
     </body>
 </html>

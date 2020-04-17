@@ -11,6 +11,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   </div>
 </head>
 <body>
+  
     <div class="navbar col-12" th:fragment="navbar">
         <div class="nav-item col-md-3">
           <a class="homeNav" href="#"><image class="homeImg" src="/img/braylonLogo.png"/></a>
@@ -31,14 +32,13 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
           <a class="visitsNav" href="#"><button class="navBtn" type="submit" id="visitBtn" name="visitBtn">
             Visits</button></a>
         </div>
+
         <div class="col-md-12">
           <p style="text-align: center; font-style: italic; color: #8dcaff">You might find...you'll get what you need.</p>
         </div>
       </div>
       <br>
       <br>
-      <section th:insert="${section} ?: ~{}">
-      </section>
-</div>
+    </div>
 </body>
 </html>

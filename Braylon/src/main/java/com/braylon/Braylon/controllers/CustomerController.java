@@ -1,13 +1,22 @@
 package com.braylon.Braylon.controllers;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
+
 import com.braylon.Braylon.entities.Customer;
+import com.braylon.Braylon.entities.CustomerOrder;
 import com.braylon.Braylon.entities.State;
+import com.braylon.Braylon.entities.User;
+import com.braylon.Braylon.repositories.UserRepo;
 import com.braylon.Braylon.service.CustomerService;
 import com.braylon.Braylon.service.StateService;
-import java.util.Collection;
-import java.util.Optional;
-import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,15 +38,20 @@ public class CustomerController {
     @Autowired
     private StateService stateService;
 
+    @Autowired
+    private UserRepo userRepo;
     /**
      *
      * shows the customer list and create customer form
      */
-    @GetMapping("customers")
-    public String showCustomerList(Model model) {
-
-        // Get the customer list
-        Collection<Customer> customers = customerService.findAll();
+    @GetMapping("/customers")
+    public String showCustomerList(@AuthenticationPrincipal UserDetails user, Model model) {
+    
+        //getting the string id of a user and converting it to a number
+        int userId = Integer.parseInt(user.getUsername());
+        
+        // Get the customer for each particular user
+        Collection<Customer> customers = customerService.findByUser_Id(userId);
         Collection<State> states = stateService.findAll();
 
         // Add customers to the model
@@ -47,8 +61,8 @@ public class CustomerController {
         // if model does not have a single customer
         // create a new empty customer (blank fields)
         if (!model.containsAttribute("customer")) {
-
-            //filler space, fills when it's empty
+            User currentUser = userRepo.findUserByUsername(user.getUsername());
+            model.addAttribute("currentUser", currentUser);
             model.addAttribute("customer", new Customer());
         }
 
@@ -64,14 +78,14 @@ public class CustomerController {
      * creating a new customer this method can redirect user to the
      * "showCustomerList" method
      */
-    @PostMapping("customers")
+    @PostMapping("/customers")
     public String addCustomer(@Valid Customer customer, BindingResult result, RedirectAttributes redirAttr) {
 
         // for validation BindingResult (erros in validation)
         if (result.hasErrors()) {
 
             // Add customer to the model 
-            redirAttr.addFlashAttribute("org.springframework.validation.BindingResult.customer", result);
+            redirAttr.addFlashAttribute("result", result);
             redirAttr.addFlashAttribute("customer", customer);
 
             // Redirect
@@ -83,7 +97,7 @@ public class CustomerController {
         // Flag 'created' to true so a message appears on the view
         redirAttr.addFlashAttribute("created", true);
 
-        return "redirect:/index"; //spoke with Amir and changed this
+        return "redirect:/customers"; 
 
     }
 
@@ -92,10 +106,10 @@ public class CustomerController {
      * editing a existing customer
      *
      */
-    @GetMapping("customer/{id}/edit")
+    @GetMapping("customer/{id}")
     public String showEditForm(@PathVariable("id") int id, Model model) {
 
-        // Find motorcycle by id
+        // Find customer by id
         Optional<Customer> editCustomer = this.customerService.findById(id);
 
         // If the customer exists
@@ -104,6 +118,17 @@ public class CustomerController {
             Customer customer = editCustomer.get();
             Collection<State> states = stateService.findAll();
             
+            //list of customer orders
+            List<CustomerOrder> customerOrders = customer.getCustomerOrders(); 
+            
+            //check if list has one item or is not empty 
+            if (!customerOrders.isEmpty()){
+                CustomerOrder customerOrder = customerOrders.get(customerOrders.size()-1);
+                
+                model.addAttribute("lastCustomerOrder", customerOrder);
+
+            }
+            
             if (!model.containsAttribute("customer")) {
 
                 // Add the customer to the model
@@ -111,14 +136,14 @@ public class CustomerController {
 
             }
             
-            model.addAttribute("state", states);
+            model.addAttribute("states", states);
 
             // Show the edit form
-            return "customer.html";
+            return "customerInfo/view";
         }
 
         // Redirect to the view
-        return "redirect:/customers";
+        return "redirect:customerInfo/view";
     }
     
     
@@ -141,7 +166,7 @@ public class CustomerController {
             redirAttr.addFlashAttribute("customer", customer);
 
             // Redirect
-            return "redirect:/customer/" + id + "/edit";
+            return "redirect:/customer/" + id ;
         }
 
         this.customerService.save(customer);
@@ -149,7 +174,7 @@ public class CustomerController {
         // view appears with 'updated' message 
         redirAttr.addFlashAttribute("updated", true);
 
-        return "redirect:/customers";
+        return "redirect:/customer/" + id;
 
     }
     

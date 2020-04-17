@@ -14,6 +14,8 @@ import com.braylon.Braylon.service.SalesVisitService;
 import java.time.LocalDate;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,19 +39,22 @@ public class SalesVisitController {
     
     //All Visits for indicated Employee and display Sales Visit page with New Visit form
     @GetMapping("salesVisits")
-    public String displayEmployeeSalesVisit(SalesVisit salesvisit, String id, Model model){
-         model.addAttribute("employeeSalesVisits", salesVisitservice.findSalesVisitsByEmployeeId(Integer.parseInt(id)));
+    public String displayEmployeeSalesVisit(@AuthenticationPrincipal UserDetails user, SalesVisit salesvisit, Model model){
+//        
+         int id = Integer.parseInt(user.getUsername());
+         model.addAttribute("employeeSalesVisits", salesVisitservice.findSalesVisitsByEmployeeId((id)));
          model.addAttribute("customers", salesVisitservice.findAllCustomers());
          model.addAttribute("visitPurposes", salesVisitservice.findAllVisitPurpose());
          model.addAttribute("visitTimes", salesVisitservice.findAllVisitTime());
-         model.addAttribute("employee", salesVisitservice.findUserById(Integer.parseInt(id)));
+         model.addAttribute("employee", salesVisitservice.findUserById((id)));
          return "salesVisits/salesVisits";
     }
     
     //Add new visit
     @PostMapping("newVisit")
-    public String addNewVisit(SalesVisit salesVisit,String id, HttpServletRequest request, Model model){
-        
+    public String addNewVisit(@AuthenticationPrincipal UserDetails user, SalesVisit salesVisit, HttpServletRequest request, Model model){
+       
+       int id = Integer.parseInt(user.getUsername()); 
        int employeeId = Integer.parseInt(request.getParameter("employee"));
        int customerId = Integer.parseInt(request.getParameter("customer"));
        int purposeId = Integer.parseInt(request.getParameter("purpose"));
@@ -71,13 +76,15 @@ public class SalesVisitController {
        
        salesVisitservice.addSalesVisit(salesVisit);
        
-        return "redirect:/salesVisits?id="+employeeId;
+        return "redirect:/salesVisits";
     }
 
     //Display edit visit form
     @GetMapping("editVisit")
-    public String displayEditSalesVisits(SalesVisit salesVisit, String id, Model model){
+    public String displayEditSalesVisits(@AuthenticationPrincipal UserDetails user, SalesVisit salesVisit, String id, Model model){
+         int userid = Integer.parseInt(user.getUsername());
          model.addAttribute("salesVisit", salesVisitservice.findSalesVisitById(Integer.parseInt(id)));
+         model.addAttribute("employee", salesVisitservice.findUserById((userid)));
          model.addAttribute("customers", salesVisitservice.findAllCustomers());
          model.addAttribute("visitPurposes", salesVisitservice.findAllVisitPurpose());
          model.addAttribute("visitTimes", salesVisitservice.findAllVisitTime());
@@ -86,7 +93,11 @@ public class SalesVisitController {
     
     //Updates a sales visit
     @PostMapping("editVisit")
-    public String editSalesVisit(SalesVisit salesVisit, String id, HttpServletRequest request, Model model){
+    public String editSalesVisit(@AuthenticationPrincipal UserDetails user, SalesVisit salesVisit, String id, HttpServletRequest request, Model model){
+       
+       int userid = Integer.parseInt(user.getUsername());
+       
+       model.addAttribute("employee", salesVisitservice.findUserById((userid)));
        
        int salesVisitId = Integer.parseInt(request.getParameter("visit_id"));
        int employeeId = Integer.parseInt(request.getParameter("employee"));
@@ -112,18 +123,24 @@ public class SalesVisitController {
       
        salesVisitservice.editSalesVisit(salesVisit);
        
-        return "redirect:/salesVisits?id="+employeeId;
+        return "redirect:/salesVisits";
     }
     
     @GetMapping("deleteVisit")
-    public String deleteSalesVisit(HttpServletRequest request){
-        String employeeId = request.getParameter("employee");
-        String visitId = request.getParameter("visit_id");
-        salesVisitservice.deleteSalesVisitByID(Integer.parseInt(visitId)); 
-        return "redirect:/salesVisits?id="+employeeId;
+    public String deleteVisit(@AuthenticationPrincipal UserDetails user, Integer id, HttpServletRequest request, Model model){
+        
+        int userid = Integer.parseInt(user.getUsername());
+       
+        model.addAttribute("employee", salesVisitservice.findUserById((userid)));
+        
+        SalesVisit salesvisit = salesVisitservice.findSalesVisitById((id));
+        String salesVisitId = request.getParameter("visit");
+        User employee = salesvisit.getUser();
+        int employeeId = employee.getEmployee_id();
+        
+        salesVisitservice.deleteSalesVisitByID(id); 
+        
+        return "redirect:/salesVisits";
     }
     
 }
-
-
-
