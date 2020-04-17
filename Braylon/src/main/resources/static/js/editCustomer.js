@@ -1,17 +1,17 @@
 $(document).ready(function() {
 
     $('#edit-customer-button').click(function(){
-        $('#new-customer-form :input').prop('disabled', false);
+        $('#edit-customer-form :input').prop('disabled', false);
         $('#update-customer-button').show();
-        $('#reset-customer-button').show();
+        $('#cancel-edit-button').show();
+        $('#edit-customer-button').hide();
     });
 
-    $('#reset-customer-button').click(function(){
-        $('#reset-customer-button').hide();
+    $('#cancel-edit-button').click(function(){
+        $('#cancel-edit-button').hide();
         $('#update-customer-button').hide();
-        $('#new-customer-form :input').prop('disabled', true);
-
-
+        $('#edit-customer-form :input').prop('disabled', true);
+        $('#edit-customer-button').show();
     });
 
 });
