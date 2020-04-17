@@ -28,14 +28,12 @@ public class SalesPerformanceController {
     
     @GetMapping("/view")
     public String dashboard(HttpServletRequest request, Model model) {
-        System.out.println("Hello");
         List<User> list = salesPerformanceService.getUserListForLoggedInUser();
         if (list.isEmpty()){
             //list is empty, will want to redirect
         }
 
         model.addAttribute("salesPerformances", salesPerformanceService.getSalesPerformancesForUsers(list));
-        //get files for this user
         return "salesPerformance/dashboard";
     }
 }
