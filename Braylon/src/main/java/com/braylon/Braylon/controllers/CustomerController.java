@@ -1,10 +1,12 @@
 package com.braylon.Braylon.controllers;
 
 import com.braylon.Braylon.entities.Customer;
+import com.braylon.Braylon.entities.CustomerOrder;
 import com.braylon.Braylon.entities.State;
 import com.braylon.Braylon.service.CustomerService;
 import com.braylon.Braylon.service.StateService;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,7 +101,7 @@ public class CustomerController {
     @GetMapping("customer/{id}")
     public String showEditForm(@PathVariable("id") int id, Model model) {
 
-        // Find motorcycle by id
+        // Find customer by id
         Optional<Customer> editCustomer = this.customerService.findById(id);
 
         // If the customer exists
@@ -107,6 +109,17 @@ public class CustomerController {
             // Get the customer object
             Customer customer = editCustomer.get();
             Collection<State> states = stateService.findAll();
+            
+            //list of customer orders
+            List<CustomerOrder> customerOrders = customer.getCustomerOrders(); 
+            
+            //check if list has one item or is not empty 
+            if (!customerOrders.isEmpty()){
+                CustomerOrder customerOrder = customerOrders.get(customerOrders.size()-1);
+                
+                model.addAttribute("lastCustomerOrder", customerOrder);
+
+            }
             
             if (!model.containsAttribute("customer")) {
 
