@@ -65,15 +65,15 @@
                                             </tr>
                                             <div th:each="currentUser : ${users}">
                                                 <tr>
-                                                    <td th:text="${currentUser.employeeId}"></td>
-                                                    <td th:text="${currentUser.firstName + currentUser.lastName}">Name</td>
+                                                    <td th:text="${currentUser.employee_id}"></td>
+                                                    <td th:text="$'{currentUser.firstName}' + ' ' + '${currentUser.lastName}'">Name</td>
                                                     <td>
                                                         <div th:each="currentRole : ${currentUser.roles}" >
                                                             <span th:text="${currentRole.role}">role</span>&nbsp;
                                                         </div>
                                                     </td>
                                                     <td th:text="${currentUser.enabled}">enabled</td>
-                                                    <td><a href="#" th:href="@{/editUser(id=${currentUser.employeeId})}">Edit</a></td>
+                                                    <td><a href="#" th:href="@{/editUser(id=${currentUser.employee_id})}">Edit</a></td>
                                                     <td>
                                                         <form class="form-inline" 
                                                               method="POST" 
@@ -82,8 +82,8 @@
                                                                    th:name="${_csrf.parameterName}" 
                                                                    th:value="${_csrf.token}"/>
                                                             <input type="hidden" 
-                                                                   name="employeeId" 
-                                                                   th:value="${currentUser.employeeId}"/>
+                                                                   name="employee_id" 
+                                                                   th:value="${currentUser.employee_id}"/>
                                                             <button class="btn btn-link btn-xs" type="submit">Delete</button>
                                                         </form>
                                                     </td>
