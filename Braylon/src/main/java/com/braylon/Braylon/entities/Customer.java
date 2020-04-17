@@ -5,12 +5,14 @@
  */
 package com.braylon.Braylon.entities;
 
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.Data;
 
 @Entity
@@ -40,6 +42,10 @@ public class Customer {
     @ManyToOne
     @JoinColumn( name = "employee_id")
     private User user;
+    
+    //access list of orders for the customer
+    @OneToMany( mappedBy = "customer")
+    private List<CustomerOrder> customerOrders;
     
     
 }
