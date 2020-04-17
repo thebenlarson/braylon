@@ -40,12 +40,6 @@ public class UserController {
     @GetMapping("/login")
     public String login() {
         
-        List<Role> roleList = roles.findAll();
-        System.out.println(roleList);
-        
-        User userList = users.findById(100000001).orElse(null);
-        System.out.println(userList);
-        
         return "login/loginPage";
     }
     

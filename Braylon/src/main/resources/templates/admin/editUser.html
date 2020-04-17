@@ -32,7 +32,7 @@
                                    th:name="${_csrf.parameterName}" 
                                    th:value="${_csrf.token}"/>
                             <label for="submit">
-                                Hello : <span th:text="${#authentication.name}">
+                               <!-- Hello : <span th:text="${#authentication.employee_id}">-->
                                 </span>&nbsp;&nbsp;&nbsp;|
                             </label>
                             <button class="btn btn-link" 
@@ -49,7 +49,7 @@
                         <div class="row">
                             <form method="POST" action="editUser" class="col-md-10">
                                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                                <input type="hidden" name="employeeId" th:value ="${user.employeeId}"/>
+                                <input type="hidden" id="employee_id" name="employee_id" th:value ="${user.employee_id}"/>
                                 <div class="form-group row">
                                     <label for="firstName" class="col-md-4 control-label">First Name:</label>
                                     <div class="col-md-8">
@@ -59,7 +59,7 @@
                                                name="firstName" 
                                                placeholder="First_Name"
                                                th:value="${user.firstName}"
-                                               disabled/>
+                                               />
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -71,7 +71,7 @@
                                                name="lastName" 
                                                placeholder="Last_Name"
                                                th:value="${user.lastName}"
-                                               disabled/>
+                                               />
                                     </div>
 
                                 </div>
@@ -92,7 +92,7 @@
                                                 multiple="multiple" 
                                                 class="form-control">
                                             <div th:each="currentRole : ${roles}">
-                                                <option th:value="${currentRole.roleId}" 
+                                                <option th:value="${currentRole.role_id}" 
                                                         th:selected=="${user.roles.contains(currentRole)}"
                                                         th:text="${currentRole.role}">
                                                 </option>
@@ -126,7 +126,7 @@
                                 <input type="hidden" 
                                        th:name="${_csrf.parameterName}" 
                                        th:value="${_csrf.token}"/>
-                                <input type="hidden" name="employeeId" th:value ="${user.employeeId}"/>
+                                <input type="hidden" name="employee_id" th:value ="${user.employee_id}"/>
                                 <div class="form-group row">
                                     <label for="password" class="col-md-4 control-label">
                                         New Password:
