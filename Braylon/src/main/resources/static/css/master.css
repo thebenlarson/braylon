@@ -38,6 +38,10 @@ body{
     color: #a1d3ff;
   }
 
+  #song-player{
+    display: none;
+  }
+
   .navbar, .frame1, .frame2, .frame3{
     border-radius: 15px 50px;
     border-width: 1.5px;
