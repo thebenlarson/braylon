@@ -61,10 +61,12 @@ public class SalesPerformanceService {
         obj.setTotalSalesVisits(salesVisitRepo.findAllByUser(user).size());
         
         for (CustomerOrder order : orders){
-            long epoch = order.getSubmission_date().toEpochSecond(ZoneOffset.UTC);
             if (order.getStatus().getStatus_id() == 6){
                 totalSalesCompleted++;
             }
+            /*
+            long epoch = order.getSubmission_date().toEpochSecond(ZoneOffset.UTC);
+            
             if (epoch > weekEpoch){
                 weekToDate++;
             }
@@ -74,6 +76,7 @@ public class SalesPerformanceService {
             if (epoch > yearEpoch){
                 yearToDate++;
             }
+            */
         }
         
         obj.setTotalSalesCompleted(totalSalesCompleted);
