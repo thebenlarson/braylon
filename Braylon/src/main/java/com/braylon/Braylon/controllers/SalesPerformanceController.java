@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author benth
  */
 @Controller
-//@RequestMapping("/salesPerformance")
+///@RequestMapping("/salesPerformance")
 public class SalesPerformanceController {
     
     @Autowired
