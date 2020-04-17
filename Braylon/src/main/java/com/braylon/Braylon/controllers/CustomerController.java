@@ -47,7 +47,6 @@ public class CustomerController {
         // if model does not have a single customer
         // create a new empty customer (blank fields)
         if (!model.containsAttribute("customer")) {
-
             //filler space, fills when it's empty
             model.addAttribute("customer", new Customer());
         }

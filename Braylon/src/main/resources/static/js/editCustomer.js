@@ -10,7 +10,7 @@ $(document).ready(function() {
     $('#reset-customer-button').click(function(){
         $('#reset-customer-button').hide();
         $('#update-customer-button').hide();
-        $('#new-customer-form :input').prop('disabled', true);
+        $('#edit-customer-form :input').prop('disabled', true);
         $('#edit-customer-button').show();
     });
 

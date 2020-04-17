@@ -26,14 +26,18 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             text-indent: 1px;
             text-overflow: '';
         }
+
+        #edit-customer-form{
+            font-weight: bold;
+        }
       </style>
   </head>
   <body>
     <div class="container">
     <div th:replace="fragments/layout:: navbar"></div>
         <div class="frame1">
-
-        <form id="edit-customer-form" method="POST" action="#" th:action="@{{id}/update(id=${customer.customer_id})}">
+        <h1 th:text="${customer.company}"></h1>
+        <form id="edit-customer-form" class="col-7 align-center" method="POST" action="#" th:action="@{{id}/update(id=${customer.customer_id})}">
             <div class="form-group">
                 <label for="company">Company</label>
                 <input type="text" name="company" class="form-control" th:value="${customer.company}" disabled>
@@ -67,12 +71,12 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             </div>
             <input type="hidden" name="customerId" th:value="${customer.customer_id}"/>
             <div class="form-group">
-                <button type="reset" class="button" id="reset-customer-button">Cancel</button>
-                <button type="submit" class="button" id="update-customer-button">Update Customer</button>
+                <button type="reset" class="navBtn" id="reset-customer-button">Cancel</button>
+                <button type="submit" class="navBtn" id="update-customer-button">Update Customer</button>
             </div>
         </form>	
         <div class="row">
-            <button id="edit-customer-button">Edit Customer</button>
+            <button id="edit-customer-button" class="navBtn">Edit Customer</button>
         </div>
     </div>
     </div>

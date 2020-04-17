@@ -25,6 +25,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                             <th>Contact</th>
                             <th>Phone</th>
                             <th>Email</th>
+                            <th></th>
                         </tr>
                         <tbody id="customerTable">
                             <tr th:each="customer : ${customers}">
@@ -75,7 +76,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     </div>
                     <div class="form-group">
                         <button type="reset" class="cancel-button" id="cancel-customer-below">Cancel</button>
-                        <button type="submit" class="button">Add Customer</button>
+                        <button type="submit" class="navBtn">Add Customer</button>
                     </div>
                 </form>	
             </div>  
