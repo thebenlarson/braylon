@@ -1,14 +1,19 @@
 package com.braylon.Braylon.controllers;
 
-import com.braylon.Braylon.entities.Customer;
-import com.braylon.Braylon.entities.CustomerOrder;
-import com.braylon.Braylon.entities.State;
-import com.braylon.Braylon.service.CustomerService;
-import com.braylon.Braylon.service.StateService;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
 import javax.validation.Valid;
+
+import com.braylon.Braylon.entities.Customer;
+import com.braylon.Braylon.entities.CustomerOrder;
+import com.braylon.Braylon.entities.State;
+import com.braylon.Braylon.entities.User;
+import com.braylon.Braylon.repositories.UserRepo;
+import com.braylon.Braylon.service.CustomerService;
+import com.braylon.Braylon.service.StateService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,6 +38,8 @@ public class CustomerController {
     @Autowired
     private StateService stateService;
 
+    @Autowired
+    private UserRepo userRepo;
     /**
      *
      * shows the customer list and create customer form
@@ -54,7 +61,8 @@ public class CustomerController {
         // if model does not have a single customer
         // create a new empty customer (blank fields)
         if (!model.containsAttribute("customer")) {
-            //filler space, fills when it's empty
+            User currentUser = userRepo.findUserByUsername(user.getUsername());
+            model.addAttribute("currentUser", currentUser);
             model.addAttribute("customer", new Customer());
         }
 
@@ -89,7 +97,7 @@ public class CustomerController {
         // Flag 'created' to true so a message appears on the view
         redirAttr.addFlashAttribute("created", true);
 
-        return "redirect:/index"; //spoke with Amir and changed this
+        return "redirect:/customers"; 
 
     }
 

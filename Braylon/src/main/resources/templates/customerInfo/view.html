@@ -80,6 +80,26 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             <button id="edit-customer-button" class="navBtn">Edit Customer</button>
         </div>
     </div>
+    <div class="frame2">
+        <h2>Most Recent Order</h2>
+        <table class="table table-striped">
+            <tr>
+                <th>Order</th>
+                <th>Status</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th></th>
+            </tr>
+            <tbody id="customerTable">
+                <tr>
+                    <td th:text="${lastCustomerOrder?.orderId}"></td>
+                    <td th:text="${lastCustomerOrder?.status?.status_name}"></td>
+                    <td th:text="${lastCustomerOrder?.product?.product_name}"></td>
+                    <td th:text="${lastCustomerOrder?.orderQuantity}"></td>
+                </tr>      
+            </tbody>          
+        </table>
+    </div>
     </div>
   
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

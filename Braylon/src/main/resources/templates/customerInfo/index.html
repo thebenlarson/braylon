@@ -74,7 +74,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                         <label for="email">Email</label>
                         <input type="text" name="email" class="form-control" th:value="${customer.email}" required>
                     </div>
-                    <input type="hidden" name="employee_id" th:value="customer.employee_id"/>
+                    <input type="hidden" name="user" id="user" th:value="${currentUser.employee_id}"/>
 
                     <div class="form-group">
                         <button type="reset" class="cancel-button" id="cancel-customer-below">Cancel</button>
