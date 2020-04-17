@@ -20,13 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @author benth
  */
 @Controller
-@RequestMapping("/salesPerformance")
+//@RequestMapping("/salesPerformance")
 public class SalesPerformanceController {
     
     @Autowired
     SalesPerformanceService salesPerformanceService;
     
-    @GetMapping("/view")
+    @GetMapping("/dashboard")
     public String dashboard(HttpServletRequest request, Model model) {
         List<User> list = salesPerformanceService.getUserListForLoggedInUser();
         if (list.isEmpty()){
