@@ -4,23 +4,14 @@
 		xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <div th:replace="fragments/layout:: head-links"></div>
-	<style>
-		.frame1{
-            padding-top: 20px;
-            padding-bottom: 20px;
-            border-color: #074e8b;
-            border-radius: 15px 50px;
-            border-width: 1.5px;
-            border-style: solid;
-          }	
-  
-	</style>
-    <title>New Order</title>
+	
+    <title>Edit Order</title>
 </head>
 <body>
+    <div class="container">
 	<div th:replace="fragments/layout:: navbar"></div>
 
-	<div class="container">
+	
 				
 </br>
 	
@@ -61,8 +52,8 @@
                     <div class="form-group row">
                         <label for="product" class="col-3 col-form-label">Product</label>
                         <div class="col-9">
-                            <select id="product" name="product_id" class="form-control" >
-								<option th:each="product : ${productList}" 
+                            <select id="product" name="product" class="form-control" >
+								<option th:each="product : ${products}" 
                                         th:value="${product.product_id}" 
                                         th:text="${product.product_name}">
 								</option>
@@ -91,7 +82,7 @@
                         <label for="status" class="col-3 col-form-label">Status</label>
                         <div class="col-9">
                             <select id="status" name="status" class="form-control" >
-                                <option th:each="status : ${statusList}" 
+                                <option th:each="status : ${statuses}" 
                                         th:value="${status.status_id}" 
                                         th:text="${status.status_name}">
 								</option>
@@ -99,13 +90,7 @@
                         </div>
                     </div>
 						
-					<!--SUBMISSION DATE (only visible to Leadership team) -->
-					<div class="form-group row">
-                        <label for="price" class="col-3 col-form-label">Submission Date</label>
-                        <div class="col-9">
-                            <input th:value="${customerOrder.submission_date}" type="date" name="price" id="price" class="form-control"/>
-                        </div>
-                    </div>	
+			
 						
 					<!--NOTES -->
 					<div class="form-group row">
