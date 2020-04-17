@@ -24,7 +24,7 @@ public class VisitPurpose {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  
-    private int pupose_id;
+    private int purpose_id;
    
    @Column(nullable = false)
    @NotBlank(message = "Purpose name must not be empty.")
