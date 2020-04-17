@@ -4,100 +4,130 @@ xmlns:th="http://www.thymeleaf.org"
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <div th:replace="fragments/layout:: head-links"></div>
-    <title>Landing Page</title>
+    <title>Customer Index</title>
+    <style>
+        h1, h3, th, td{
+            text-align: center;
+            color: #01233F;    
+        }
+        label, input {
+            color: #01233F;
+        }
+
+        label{
+            font-weight: bold;
+        }
+
+        input{
+            padding-left: 5px;
+            border-radius: 5px;
+            height: 35px;
+
+        }
+  
+        form{
+            width: 50%;
+            margin-left: 25%;
+            margin-right: 25%;
+            text-align: center;
+        }
+        table{
+            max-width: 80%;
+            margin-left: 10%;
+        }
+        table th{
+            background-color: #01233F;
+            color: #a1d3ff;
+        }
+        #customerSearch{
+            margin-left: 10%;
+        }
+
+    </style>
   </head>
   <body>
-    <div th:replace="fragments/layout:: navbar"></div>
-        <div class="container col-10">
+    <div class="container">
+        <div th:replace="fragments/layout:: navbar"></div>
+        <div class="col-12 m-1 text-center">
+            <h1 th:if="${result}">
+            <p th:text="${result}"/>
+        </h1>
+        </div>
+        <div class="frame1">
             <h1> Customers</h1>
-                <div class="row justify-content-end">
-                <form class="search">
-                    <label for="search">Search By:</label>
-                    <select id="search" name="search">
-                        <option>option1</option>
-                        <option>option2</option>
-                        <option>option3</option>
-                    </select>
-                    <button class="button" href="#" >Search</button>
-                </form>
-            </div>
-            <div class="row">
-                <table class="col-12">
+            <label for="searchBar"><i class="glyphicon glyphicon-search"></i></label>
+            <input type="text" id="customerSearch" placeholder="Search By Company"> 
+                <table class="table" >
                     <tr>
                         <th>Company</th>
                         <th>Contact</th>
                         <th>Phone</th>
                         <th>Email</th>
+                        <th></th>
                     </tr>
-                    <tr>
-                        <td><a href="#">Company 1</a></td>
-                        <td>Person 1</td>
-                        <td>555-555-5555</td>
-                        <td>person1@fake.notreal</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Company 2</a></td>
-                        <td>Person 2</td>
-                        <td>555-555-5555</td>
-                        <td>person2@fake.notreal</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Company 3</a></td>
-                        <td>Person 3</td>
-                        <td>555-555-5555</td>
-                        <td>person3@fake.notreal</td>
-                    </tr>
-                    <tr>
-                        <td><a href="#">Company 4</a></td>
-                        <td>Person 4</td>
-                        <td>555-555-5555</td>
-                        <td>person4@fake.notreal</td>
-                    </tr>
-                
+                    <tbody id="customerTable">
+                        <tr th:each="customer : ${customers}">
+                            <td ><a th:href="@{customer/{id}(id=${customer.customer_id})}" th:text="${customer.company}"></a></td>
+                            <td th:text="${customer.contact}"></td>
+                            <td th:text="${customer.phone}"></td>
+                            <td th:text="${customer.email}"></td>
+                            <td><a th:href="@{customer/{id}/delete(id=${customer.customer_id})}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</a></td>
+                        </tr>      
+                    </tbody>          
                 </table>
-            </div>
-        </div>
+        </div>   
+                <br>
+                <br>
+        <div class="frame2">
+            <div class="form container col-10" id="add-user-below">
+                <form method="POST" action="#" th:action="@{/customers}">
+                    <h3>Add Customer</h3>
+                    <div class="form-group">
+                        <label for="company">Company</label>
+                        <input type="text" name="company" class="form-control" th:value="${customer.company}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Contact</label>
+                        <input type="text" name="contact" class="form-control" th:value="${customer.contact}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" name="address" class="form-control" th:value="${customer.address}"  required>
+                    </div>
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" name="city" class="form-control" th:value="${customer.city}"  required>
+                    </div>
+                    <label for="state">State</label>
+                    <select name="state" id="state">
+                        <option th:each="state : ${states}" th:value="${state.id}" 
+                         th:text="${state.name}"></option>
+                    </select>
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" name="phone" class="form-control" th:value="${customer.phone}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" name="email" class="form-control" th:value="${customer.email}" required>
+                    </div>
+                    <input type="hidden" name="user" id="user" th:value="${currentUser.employee_id}"/>
 
-        <div class="form container col-10" id="add-user-below">
-            <form>
-                <h3>Add Customer</h3>
-                <div class="form-group">
-                    <label>Company</label>
-                    <input type="text" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Contact</label>
-                    <input type="text" class="form-control"  required>
-                </div>
-                <div class="form-group">
-                    <label>Address</label>
-                    <input type="text" class="form-control"  required>
-                </div>
-                <div class="form-group">
-                    <label>City</label>
-                    <input type="text" class="form-control"  required>
-                </div>
-                <div class="form-group">
-                    <label>State</label>
-                    <input type="text" class="form-control"  required>
-                </div>
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="text" class="form-control"  required>
-                </div>
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="text" class="form-control"  required>
-                </div>
-                <div class="form-group">
-                    <button type="reset" class="cancel-button" id="cancel-customer-below">Cancel</button>
-                    <button type="submit" class="button">Add Customer</button>
-                </div>
-            </form>	
-        </div>  
+                    <div class="form-group">
+                        <button type="reset" class="btn btn-danger" id="reset-customer-form">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Customer</button>
+                    </div>
+                </form>	
+            </div>  
+        </div>
+    </div>
+            
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
+    <script type="text/javascript" src="/js/customerIndex.js"></script>
+
+  
+</body>
 </html>

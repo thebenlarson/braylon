@@ -5,14 +5,14 @@
  */
 package com.braylon.Braylon.controllers;
 
-import com.braylon.Braylon.entities.Role;
-import com.braylon.Braylon.entities.User;
 import com.braylon.Braylon.repositories.RoleRepo;
 import com.braylon.Braylon.repositories.UserRepo;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
@@ -40,13 +40,22 @@ public class UserController {
     @GetMapping("/login")
     public String login() {
         
-        List<Role> roleList = roles.findAll();
-        System.out.println(roleList);
-        
-        User userList = users.findById(100000001).orElse(null);
-        System.out.println(userList);
-        
         return "login/loginPage";
+    }
+    
+    @PostMapping("/login")
+    public String loginRedirect(@AuthenticationPrincipal UserDetails user) {
+        
+        System.out.println(user.isEnabled());
+        
+        
+        if (!user.isEnabled()) {
+            return "redirect:/login/updatePassword";
+        }
+        
+        else {
+            return "/dashboard";
+        }
     }
     
     // After redirect:/dashboard

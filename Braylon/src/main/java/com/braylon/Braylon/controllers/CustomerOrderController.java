@@ -23,12 +23,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
 @Controller
 public class CustomerOrderController {
-    
+
     @Autowired
     CustomerOrderService service;
+
     
      @GetMapping("customerorders")
         public String newOrder(@AuthenticationPrincipal UserDetails currentUser, Model model) {
@@ -39,6 +39,7 @@ public class CustomerOrderController {
         List<Product> productList = service.getProducts();
         List<Customer> customerList = service.getCustomer();
         List<CustomerOrder> salesRepOrders = service.getOrdersByEmployeeId(user);
+
         model.addAttribute("salesRepOrder", salesRepOrders);
         model.addAttribute("customerOrder", order);
         model.addAttribute("customers", customerList);
@@ -86,3 +87,4 @@ public class CustomerOrderController {
     }
 
 }
+
