@@ -11,34 +11,38 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   </div>
 </head>
 <body>
+  
     <div class="navbar col-12" th:fragment="navbar">
-        <div class="nav-item col-md-3">
-          <a class="homeNav" href="#"><image class="homeImg" src="/img/braylonLogo.png"/></a>
-        </div>
-        <div class="nav-item col-md-2">
-          <a class="adminNav" href="#"><button class="navBtn" type="submit" id="adminBtn" name="adminBtn">
-            Admin</button></a>
-        </div>
-        <div class="nav-item col-md-2">
-          <a class="customerNav" href="#"><button class="navBtn" type="submit" id="customerBtn" name="customerBtn">
-            Customers</button></a>
-        </div>
-        <div class="nav-item col-md-2">
-          <a class="orderNav" href="#"><button class="navBtn" type="submit" id="orderBtn" name="orderBtn">
-            Orders</button></a>
-        </div>
-        <div class="nav-item col-md-2">
-          <a class="visitsNav" href="#"><button class="navBtn" type="submit" id="visitBtn" name="visitBtn">
-            Visits</button></a>
-        </div>
+
+      <div class="nav-item col-md-3">
+        <a class="homeNav" th:href="dashboard"><image class="homeImg" src="/img/braylonLogo.png"/></a>
+      </div>
+      <div class="nav-item col-md-2" sec:authorize="isAnonymous()">
+        <a class="adminNav" href="login"><button class="navBtn" type="submit" >
+          Login</button></a>
+      </div>
+      <div class="nav-item col-md-2" sec:authorize="hasRole('ROLE_ADMIN')" >
+        <a class="adminNav" th:href="admin"><button class="navBtn" type="submit" id="adminBtn" name="adminBtn">
+          Admin</button></a>
+      </div>
+      <div class="nav-item col-md-2" sec:authorize="isAuthenticated()">
+        <a class="customerNav" th:href="customers"><button class="navBtn" type="submit" id="customerBtn" name="customerBtn">
+          Customers</button></a>
+      </div>
+      <div class="nav-item col-md-2" sec:authorize="isAuthenticated()">
+        <a class="orderNav" th:href="customerOrders"><button class="navBtn" type="submit" id="orderBtn" name="orderBtn">
+          Orders</button></a>
+      </div>
+      <div class="nav-item col-md-2" sec:authorize="isAuthenticated()">
+        <a class="visitsNav" th:href="salesVisits"><button class="navBtn" type="submit" id="visitBtn" name="visitBtn">
+          Visits</button></a>
+      </div>
         <div class="col-md-12">
           <p style="text-align: center; font-style: italic; color: #8dcaff">You might find...you'll get what you need.</p>
         </div>
       </div>
       <br>
       <br>
-      <section th:insert="${section} ?: ~{}">
-      </section>
-</div>
+    </div>
 </body>
 </html>
