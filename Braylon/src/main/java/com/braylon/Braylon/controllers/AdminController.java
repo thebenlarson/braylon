@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AdminController {
     
-    /*
+    
     
     @Autowired
     UserRepo users;
@@ -36,18 +36,23 @@ public class AdminController {
    
     
     @GetMapping("/admin")
-    public String displayAdminPage(Model model) {
-        model.addAttribute("users", users.findAll());
-        return "admin";
+    public String displayAdminPage() {
+        // Add in later but getting mapping done
+        //model.addAttribute("users", users.findAll());
+        return "admin/admin";
     }
     
+    /*
+    
     @PostMapping("/addUser")
-    public String addUser(int employee_id, String password) {
+    public String addUser(int employee_id, String password, String first_name, String last_name) {
         User user = new User();
         // Need to create a method to automatically assign employee id
         user.setEmployee_id(employee_id);
         // Create Password and Set in DB
         user.setPassword(password);
+        user.setFirstName(first_name);
+        user.setLastName(last_name);
         user.setEnabled(true);
         
         Set<Role> userRoles = new HashSet<>();
@@ -78,8 +83,11 @@ public class AdminController {
     
     
     @PostMapping(value="/editUser")
-    public String editUserAction(String[] roleIdList, Boolean enabled, Integer employee_id) {
+    public String editUserAction(String[] roleIdList, Boolean enabled, Integer employee_id, String first_name, String last_name) {
         User user = users.findById(employee_id).orElse(null);
+        
+        user.setFirstName(first_name);
+        user.setLastName(last_name);
         
         if(enabled != null) {
             user.setEnabled(enabled);
@@ -98,6 +106,6 @@ public class AdminController {
         return "redirect:/admin";
         
     }
-*/
-    
+
+    */
 }

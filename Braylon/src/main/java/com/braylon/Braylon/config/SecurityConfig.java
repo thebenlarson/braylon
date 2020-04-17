@@ -6,11 +6,14 @@
 package com.braylon.Braylon.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  *
@@ -32,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     http    
                 .authorizeRequests()
                     .antMatchers("/admin").hasRole("ADMIN")
-                    .antMatchers("/", "/home", "/landingPage").permitAll()
+                    .antMatchers("/", "/home", "/landingPage", "/**").permitAll()
                     .antMatchers("/css/**", "/img/**", "/js/**", "/fonts/**", "/templates/**").permitAll()
                     .anyRequest().hasRole("USER")
                 .and()
@@ -46,6 +49,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .permitAll(); 
     
     
+    }
+    
+    @Autowired
+    public void configureGlobalInDB(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetails).passwordEncoder(bCryptPasswordEncoder());
+    }
+    
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
     
 }
