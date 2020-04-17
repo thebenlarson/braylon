@@ -16,6 +16,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -23,14 +26,21 @@ import lombok.Data;
 
 @Entity
 @Data
+@Table(name = "user", schema = "BraylonDB")
+/*@NamedQueries({
+  @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+  @NamedQuery(name = "User.findByEmployeeId", query = "SELECT u FROM User u WHERE u.employeeId = :employeeId"),
+  @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName"),
+  @NamedQuery(name = "User.findByLastName", query = "SELECT u FROM User u WHERE u.lastName = :lastName")})*/
 public class User {
 
-    @Id
+  @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Size(max = 9, message = "Only 9 characters allowed")
   @NotBlank(message = "Field must not be blank")
+  @Column(name = "employee_id")
   private int employee_id;
-    
+
   private String username;
 
   @Basic(optional = false)
@@ -67,5 +77,5 @@ public class User {
   public void setEnabled(boolean enabled) {
     this.enabled = enabled;
   }
-  
+
 }

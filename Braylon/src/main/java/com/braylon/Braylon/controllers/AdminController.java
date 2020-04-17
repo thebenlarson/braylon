@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.PostMapping;
  *
  * @author ashleytulloch
  */
-@Controller
+//@Controller
 public class AdminController {
     
     
-    
+    /*
     @Autowired
     UserRepo users;
     
@@ -108,4 +108,5 @@ public class AdminController {
     }
 
     */
+  
 }

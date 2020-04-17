@@ -72,6 +72,12 @@
                     <groupId>nz.net.ultraq.thymeleaf</groupId>
                     <artifactId>thymeleaf-layout-dialect</artifactId>
                 </dependency>
+	 <dependency>
+	  <groupId>com.braylon</groupId>
+	  <artifactId>Braylon</artifactId>
+	  <version>0.0.1-SNAPSHOT</version>
+	  <type>jar</type>
+	 </dependency>
 	</dependencies>
 
 	<build>
