@@ -5,6 +5,45 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <div th:replace="fragments/layout:: head-links"></div>
     <title>Customer Index</title>
+    <style>
+        h1, h3, th, td{
+            text-align: center;
+            color: #01233F;    
+        }
+        label, input {
+            color: #01233F;
+        }
+
+        label{
+            font-weight: bold;
+        }
+
+        input{
+            padding-left: 5px;
+            border-radius: 5px;
+            height: 35px;
+
+        }
+  
+        form{
+            width: 50%;
+            margin-left: 25%;
+            margin-right: 25%;
+            text-align: center;
+        }
+        table{
+            max-width: 80%;
+            margin-left: 10%;
+        }
+        table th{
+            background-color: #01233F;
+            color: #a1d3ff;
+        }
+        #customerSearch{
+            margin-left: 10%;
+        }
+
+    </style>
   </head>
   <body>
     <div class="container">
@@ -18,29 +57,27 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             <h1> Customers</h1>
             <label for="searchBar"><i class="glyphicon glyphicon-search"></i></label>
             <input type="text" id="customerSearch" placeholder="Search By Company"> 
-                <div class="row">
-                    <table class="table table-striped">
-                        <tr>
-                            <th>Company</th>
-                            <th>Contact</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th></th>
-                        </tr>
-                        <tbody id="customerTable">
-                            <tr th:each="customer : ${customers}">
-                                <td ><a th:href="@{customer/{id}(id=${customer.customer_id})}" th:text="${customer.company}"></a></td>
-                                <td th:text="${customer.contact}"></td>
-                                <td th:text="${customer.phone}"></td>
-                                <td th:text="${customer.email}"></td>
-                                <td><a th:href="@{customer/{id}/delete(id=${customer.customer_id})}" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</a></td>
-                            </tr>      
-                        </tbody>          
-                    </table>
-                </div>
-            </div>
-   
-                
+                <table class="table" >
+                    <tr>
+                        <th>Company</th>
+                        <th>Contact</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                    <tbody id="customerTable">
+                        <tr th:each="customer : ${customers}">
+                            <td ><a th:href="@{customer/{id}(id=${customer.customer_id})}" th:text="${customer.company}"></a></td>
+                            <td th:text="${customer.contact}"></td>
+                            <td th:text="${customer.phone}"></td>
+                            <td th:text="${customer.email}"></td>
+                            <td><a th:href="@{customer/{id}/delete(id=${customer.customer_id})}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this customer?');">Delete</a></td>
+                        </tr>      
+                    </tbody>          
+                </table>
+        </div>   
+                <br>
+                <br>
         <div class="frame2">
             <div class="form container col-10" id="add-user-below">
                 <form method="POST" action="#" th:action="@{/customers}">
@@ -77,8 +114,8 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                     <input type="hidden" name="user" id="user" th:value="${currentUser.employee_id}"/>
 
                     <div class="form-group">
-                        <button type="reset" class="cancel-button" id="cancel-customer-below">Cancel</button>
-                        <button type="submit" class="navBtn">Add Customer</button>
+                        <button type="reset" class="btn btn-danger" id="reset-customer-form">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Customer</button>
                     </div>
                 </form>	
             </div>  

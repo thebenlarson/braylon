@@ -4,9 +4,13 @@ xmlns:th="http://www.thymeleaf.org"
 xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <head>
     <div th:replace="fragments/layout:: head-links"></div>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <title>Customer</title>
       <style>
+        h1, h3, th, .frame2, .frame2{
+            text-align: center;
+            color: #01233F;    
+        }
+
         #update-customer-button, #cancel-edit-button{
             display: none;
         }
@@ -14,6 +18,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         input[type="text"]:disabled{
             background: none;
             border: none;
+
         }
         select:disabled{
             background: none;
@@ -30,13 +35,46 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         #edit-customer-form{
             font-weight: bold;
         }
+        
+        label{
+            font-size: 20px;
+        }
+
+        form{
+            width: 80%;
+            margin-left: 10%;
+            text-align: left;
+
+        }
+        form input{
+            font-size: 18px;
+        }
+
+        table{
+            max-width: 80%;
+            margin-left: 10%;
+        }
+        table th{
+            background-color: #01233F;
+            color: #a1d3ff;
+        }
+        #customerSearch{
+            margin-left: 10%;
+        }
+        #edit-customer-button{
+            margin-left:80%;
+        }
+
       </style>
   </head>
   <body>
     <div class="container">
-    <div th:replace="fragments/layout:: navbar"></div>
+        <div th:replace="fragments/layout:: navbar"></div>
+        <br>
+        <br>    
         <div class="frame1">
         <h1 th:text="${customer.company}"></h1>
+        <br>
         <form id="edit-customer-form" class="col-7 align-center" method="POST" action="#" th:action="@{{id}/update(id=${customer.customer_id})}">
             <div class="form-group">
                 <label for="company">Company</label>
@@ -56,6 +94,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             </div>
             <div class="form-group">
                 <label for="state">State</label>
+                <br>
                 <select name="state" id="state" disabled>
                     <option th:each="state : ${states}" th:value="${state.id}" 
                      th:text="${state.name}" th:selected="${state == customer.state}"></option>
@@ -72,35 +111,34 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
             <input type="hidden" name="customerId" th:value="${customer.customer_id}"/>
             <input type="hidden" name="user" id="user" th:value="${customer.user.employee_id}"/>
             <div class="form-group">
-                <button type="reset" class="navBtn" id="cancel-edit-button">Cancel</button>
-                <button type="submit" class="navBtn" id="update-customer-button">Update Customer</button>
+                <button type="reset" class="btn btn-danger" id="cancel-edit-button">Cancel</button>
+                <button type="submit" class="btn btn-primary" id="update-customer-button">Update Customer</button>
             </div>
   
-        </form>	
-        <div class="row">
-            <button id="edit-customer-button" class="navBtn">Edit Customer</button>
+            </form>	
+            <button id="edit-customer-button" class="btn btn-primary">Edit Customer</button>
         </div>
-    </div>
-    <div class="frame2">
-        <h2>Most Recent Order</h2>
-        <table class="table table-striped">
-            <tr>
-                <th>Order</th>
-                <th>Status</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th></th>
-            </tr>
-            <tbody id="customerTable">
+        <br>
+        <br>
+        <div class="frame2">
+            <h3>Most Recent Order</h3>
+            <table class="table">
                 <tr>
-                    <td th:text="${lastCustomerOrder?.orderId}"></td>
-                    <td th:text="${lastCustomerOrder?.status?.status_name}"></td>
-                    <td th:text="${lastCustomerOrder?.product?.product_name}"></td>
-                    <td th:text="${lastCustomerOrder?.orderQuantity}"></td>
-                </tr>      
-            </tbody>          
-        </table>
-    </div>
+                    <th>Order</th>
+                    <th>Status</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                </tr>
+                <tbody id="customerTable">
+                    <tr>
+                        <td th:text="${lastCustomerOrder?.orderId}"></td>
+                        <td th:text="${lastCustomerOrder?.status?.status_name}"></td>
+                        <td th:text="${lastCustomerOrder?.product?.product_name}"></td>
+                        <td th:text="${lastCustomerOrder?.orderQuantity}"></td>
+                    </tr>      
+                </tbody>          
+            </table>
+        </div>
     </div>
   
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
