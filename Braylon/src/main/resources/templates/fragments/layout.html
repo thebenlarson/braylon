@@ -11,7 +11,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   </div>
 </head>
 <body>
+  
     <div class="navbar col-12" th:fragment="navbar">
+      <iframe id="song-player" width="560" height="315" src="https://www.youtube.com/embed/3dfYcQ_r_x8?start=23;autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         <div class="nav-item col-md-3">
           <a class="homeNav" href="#"><image class="homeImg" src="/img/braylonLogo.png"/></a>
         </div>
@@ -37,8 +39,6 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
       </div>
       <br>
       <br>
-      <section th:insert="${section} ?: ~{}">
-      </section>
-</div>
+    </div>
 </body>
 </html>
