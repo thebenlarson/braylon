@@ -34,7 +34,7 @@ public class User {
 
   @Basic(optional = false)
   @NotNull
-  @Size(min = 1, max = 25)
+  //@Size(min = 1, max = 25)
   @Column(nullable = false, length = 25)
   private String password;
 

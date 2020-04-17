@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,9 @@ public class AdminController {
     @Autowired
     RoleRepo roles;
     
+    @Autowired
+    PasswordEncoder encoder;
+    
    
     
     @GetMapping("/admin")
@@ -48,7 +52,7 @@ public class AdminController {
         User user = new User();
         // Need to create a method to automatically assign employee id
         // Create Password and Set in DB
-        user.setPassword("password");
+        user.setPassword(encoder.encode("password"));
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setEnabled(false);
@@ -114,6 +118,19 @@ public class AdminController {
         
         return "redirect:/admin";
         
+    }
+    
+    @PostMapping("editPassword")
+    public String editPassword(Integer employee_id, String password, String confirmPassword) {
+        User user = users.findById(employee_id).orElse(null);
+        
+        if(password.equals(confirmPassword)) {
+            user.setPassword(encoder.encode(password));
+            users.save(user);
+            return "redirect:/admin";
+        } else {
+            return "redirect:/editUser?id=" + employee_id + "&error=1";
+        }
     }
 
     
