@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,10 +36,13 @@ public class CustomerController {
      * shows the customer list and create customer form
      */
     @GetMapping("/customers")
-    public String showCustomerList(Model model) {
-
-        // Get the customer list
-        Collection<Customer> customers = customerService.findAll();
+    public String showCustomerList(@AuthenticationPrincipal UserDetails user, Model model) {
+    
+        //getting the string id of a user and converting it to a number
+        int userId = Integer.parseInt(user.getUsername());
+        
+        // Get the customer for each particular user
+        Collection<Customer> customers = customerService.findByUser_Id(userId);
         Collection<State> states = stateService.findAll();
 
         // Add customers to the model
