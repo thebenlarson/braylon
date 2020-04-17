@@ -71,7 +71,7 @@ public class CustomerOrderService {
             return orders.findAll();
         }
 
-        return orders.findAllByUser(user, Sort.by(Sort.Direction.ASC, "order_id"));
+        return orders.findAllByUser(user, Sort.by(Sort.Direction.ASC, "orderId"));
     }
 
     public List<CustomerOrder> getAllOrders() {
@@ -79,7 +79,7 @@ public class CustomerOrderService {
     }
 
     public List<CustomerOrder> getOrdersByCustomerId(Customer customer) {
-        return orders.findAllByCustomer(customer, Sort.by(Sort.Direction.ASC, "order_id"));
+        return orders.findAllByCustomer(customer, Sort.by(Sort.Direction.ASC, "orderId"));
     }
 
     public CustomerOrder getOrderById(int order_id) {
