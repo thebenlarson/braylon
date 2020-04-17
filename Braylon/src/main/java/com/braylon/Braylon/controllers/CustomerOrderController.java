@@ -30,7 +30,7 @@ public class CustomerOrderController {
     @Autowired
     CustomerOrderService service;
     
-     @GetMapping("/customerorders")
+     @GetMapping("customerorders")
         public String newOrder(@AuthenticationPrincipal UserDetails currentUser, Model model) {
         CustomerOrder order = new CustomerOrder();
         int num = Integer.parseInt(currentUser.getUsername());
@@ -45,7 +45,7 @@ public class CustomerOrderController {
         model.addAttribute("products", productList);
         model.addAttribute("statuses", statusList);
         model.addAttribute("user", user);
-        return "customerorders";
+        return "customerOrders/customerorders";
     }
     
     @PostMapping("customerorders")

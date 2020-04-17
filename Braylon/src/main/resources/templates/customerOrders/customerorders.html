@@ -33,10 +33,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						
 		<!-- BODY OF THE TABLE with id:ordersTable -->
                 <tbody id="ordersTable">
-                    <tr th:each="customerOrder : ${salesRepOrder}">
-                    <td th:text="${customerOrder.order_id}">Order #</td>
-                    <td th:text="${customerOrder.user.employee_id}">Sales Rep Id</td>
-                    <td th:text="${customerOrder.customer.customer_id}">Customer  Id</td>
+                    <tr th:each="order : ${salesRepOrders}">
+                    <td th:text="${order.orderId}">Order #</td>
+                    <td th:text="${order.user.employee_id}">Sales Rep Id</td>
+                    <td th:text="${order.customer.customer_id}">Customer  Id</td>
                     <td><a href="#" th:href="@{/editOrder(id=${customerOrder.order_id})}">View/Edit</a></td>
                     <td><a href="#" th:href="@{/deleteOrder(id=${customerOrder.order_id})}">Delete</a></td>
                     </tr>
