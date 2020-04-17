@@ -59,12 +59,12 @@
             <br>
             <br>
 			<!-------------- Table data Section ---------------->
-
       			<div class="frame1 col-md-12" >
               <h1>Schedule New Sales Visits</h1>
               <br>
       			<form type="form" action="newVisit" method="POST" autocomplete="off">
-              <input type="hidden" id="employee" name="employee" th:value="${salesVisit.user.employee_id}"/>
+                            <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+              <input type="hidden" id="employee" name="employee" th:value="${employee.employee_id}"/>
               <div class="form-row col-md-12">
                 <div class="form-item col-md-6" align="right">
                   <label style="font-height: 15px;">Customer:</label>
@@ -80,8 +80,8 @@
                   <select style="width: 75%;" id="purpose" name="purpose" required>
                     <option disabled selected>--Select--</option>
                     <option th:each="visitPurpose : ${visitPurposes}"
-                            th:value="visitPurpose.purpose_id"
-                            th:text="visitPurpose.purpose_name">Purpose</option>
+                            th:value="${visitPurpose.purpose_id}"
+                            th:text="${visitPurpose.purpose_name}">Purpose</option>
                   </select>
                 </div>
               </div>
@@ -96,7 +96,8 @@
                   <select style="width: 75%;" id="visitTime" name="visitTime" required>
                     <option disabled selected>--Select--</option>
                     <option th:each="visitTime : ${visitTimes}"
-                            th:value="visitTime.time_id"></option>
+                            th:value="${visitTime.time_id}"
+                            th:text="${visitTime.time_name}">Time</option>
                   </select>
                 </div>
               </div>
@@ -127,7 +128,7 @@
                 <!--emplpoyeeSalesVisits (List of sales by employee. get employee ID)-->
                 <tr th:each="visit : ${employeeSalesVisits}">
                   <td th:text="${visit.user.firstName + ' ' + visit.user.lastName}">Employee</td>
-                  <td th:text="${visit.customer + ' ' + visit.company}">Customer</td>
+                  <td th:text="${visit.customer.company + ' ' + visit.customer.contact}">Customer</td>
                   <td th:text="${visit.visit_date}">Date</td>
                   <td th:text="${visit.time.time_name}">Time</td>
                   <td th:text="${visit.purpose.purpose_name}">Purpose</td>
@@ -153,11 +154,11 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            <p>Do you want to permantently delete this scheduled visit?</p>
+                            <p>Do you want to permanently delete this scheduled visit?</p>
                             <form type="form" action="deleteVisit" method="POST"
                             class="form-row">
                             <input type="hidden" id="employee"
-                            name="employee" th:value="${salesVisit.user.employee_id}"/>
+                            name="employee" th:value="${employee.employee_id}"/>
                                 <input type="hidden" id="visit_id" name="visit_id"
                                 th:value="${salesVisit.visit_id}"/>
                                 <button class="btn btn-danger">Delete</button>
@@ -172,11 +173,10 @@
                     </div>
                   </td>
                     <td>
-                      <a href="#" th:href="@{editVisit(id=${salesVisit.visit_id})}"><button class="btn btn-secondary" type="submit">
+                      <a href="#" th:href="@{editVisit(id=${visit.visit_id})}"><button class="btn btn-secondary" type="submit">
                         Edit Visit Info</button></a>
                     </td>
                 </tr>
-
               </tbody>
             </table>
           </div>

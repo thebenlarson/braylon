@@ -100,12 +100,12 @@ public class SalesVisitService {
          salesVisitRepo.deleteById(id);  
     }
     
-    public SalesVisit EditSalesVisitById(SalesVisit salesVisit){
+    public SalesVisit editSalesVisit(SalesVisit salesVisit){
         return salesVisitRepo.save(salesVisit);
       
      }
     
-    public SalesVisit AddSalesVisitId(SalesVisit salesVisit){
+    public SalesVisit addSalesVisit(SalesVisit salesVisit){
         return salesVisitRepo.save(salesVisit);
     }
     
@@ -138,16 +138,6 @@ public class SalesVisitService {
         List <Customer> customers = customerRepo.findAll();
         return customers;
     }
-//    public List <SalesVisit> findTodaySalesVisitsByEmployeeId(int id){
-//        List <SalesVisit> visits = salesVisitRepo.findByUserEmployeeId(id);
-//        LocalDateTime today
-//        List <SalesVisit> todayVisits = new ArrayList<>();
-//        for (SalesVisit visit: visits){
-//           LocalDateTime visitDate = visit.getVisit_date();
-//           if(visitDate.isEqual())
-//        }
-//        return visits;
-//    }
 
     public List<VisitPurpose> findAllVisitPurpose() {
         return visitPurposeRepo.findAll();
