@@ -7,7 +7,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <title>Customer</title>
       <style>
-        #update-customer-button, #reset-customer-button{
+        #update-customer-button, #cancel-edit-button{
             display: none;
         }
 
@@ -70,11 +70,12 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                 <input type="text" name="email" class="form-control" th:value="${customer.email}" disabled>
             </div>
             <input type="hidden" name="customerId" th:value="${customer.customer_id}"/>
-            <input type="hidden" name="customerId" th:value="${customer.customer_id}"/>
+            <input type="hidden" name="user" id="user" th:value="${customer.user.employee_id}"/>
             <div class="form-group">
-                <button type="reset" class="navBtn" id="reset-customer-button">Cancel</button>
+                <button type="reset" class="navBtn" id="cancel-edit-button">Cancel</button>
                 <button type="submit" class="navBtn" id="update-customer-button">Update Customer</button>
             </div>
+  
         </form>	
         <div class="row">
             <button id="edit-customer-button" class="navBtn">Edit Customer</button>
