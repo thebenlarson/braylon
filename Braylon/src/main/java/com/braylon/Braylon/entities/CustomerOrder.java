@@ -6,6 +6,7 @@
 package com.braylon.Braylon.entities;
 
 import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,8 @@ public class CustomerOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int order_id;
+    @Column(name = "order_id")
+    private int orderId;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -40,7 +42,9 @@ public class CustomerOrder {
     
     private LocalDateTime submission_date;
     
-    private int order_quantity;
+    @Column(name = "order_quantity")
+    private int orderQuantity;
     
-    private String order_comments;
+    @Column(name = "order_comments")
+    private String orderComments;
 }

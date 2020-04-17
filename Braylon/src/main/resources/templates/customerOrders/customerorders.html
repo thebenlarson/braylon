@@ -33,7 +33,7 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 						
 		<!-- BODY OF THE TABLE with id:ordersTable -->
                 <tbody id="ordersTable">
-                    <tr th:each="customerOrder : ${salesRepOrders}">
+                    <tr th:each="customerOrder : ${salesRepOrder}">
                     <td th:text="${customerOrder.order_id}">Order #</td>
                     <td th:text="${customerOrder.user.employee_id}">Sales Rep Id</td>
                     <td th:text="${customerOrder.customer.customer_id}">Customer  Id</td>
@@ -53,13 +53,14 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 				
 		<!--FORM STARTS HERE -->
                 <div class="col-7 text-center m-3">
-                    <form action="newOrder" method="POST">
+                    <form class="form" action="#"  th:action="@{/customerorders}" method="POST">
 					
 			<!--SALES REP -->
                         <div class="form-group row">
                             <label for="user" class="col-3 col-form-label">Sales Rep:</label>
                             <div class="col-9">
-                                <input type="text" name="user" id="user" class="form-control" required/>
+                                <input th:value="${user.employee_id}"  type="text" name="userId" id="userId" class="form-control" readonly required/>
+                               <!-- <input th:value="${user.employee_id}" type="text" name="user" id="user" class="form-control" required/> -->
                             </div>
                         </div>
 						
@@ -68,9 +69,9 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                             <label for="customer" class="col-3 col-form-label">Customer:</label>
                             <div class="col-9">
                                 <select class="form-control" name="customer" id="customer">                
-                                    <option th:each="customer: ${customerList}"                         
+                                    <option th:each="customer: ${customers}"                         
                                             th:value="${customer.customer_id}" 
-                                            th:text="${customer.customer_id}">-Customer Id-</option>   
+                                             th:text="${customer.customer_id}+ ': ' +${customer.company} + '---'+${customer.contact}">-Customer Id-</option>    
                                 </select>
                             </div>
                         </div>
@@ -89,9 +90,10 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                         
                         <!--QUANTITY -->
                         <div class="form-group row">
-                            <label for="order_quantity" class="col-3 col-form-label">Quantity</label>
+                            <label for="orderQuantity" class="col-3 col-form-label">Quantity</label>
                             <div class="col-9">
-                                <input type="number" name="order_quantity" id="order_quantity" class="form-control" required/>
+                                <input th:value="${customerOrder.orderQuantity}" type="number" name="orderQuantity" id="order_quantity" class="form-control" required/>
+                                    <!-- th:value="${order.order_quantity}"-->
                             </div>
                         </div>
                             
@@ -114,14 +116,23 @@ xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
                                 </select>
                             </div>
                         </div>
-						
+					
+                        <!--SUBMISSION DATE (only visible to Leadership team) -->
+			<div class="form-group row">
+                            <label for="submission_date" class="col-3 col-form-label">
+                                Submission Date</label>
+                            <div class="col-9">
+                                <input th:value="${customerOrder.submission_date}" type="date" name="submission_date" id="submission_date" class="form-control"/>
+                                <!--th:value="${order.submission_date}" -->
+                            </div>
+                        </div>	
                    
 						
 			<!--NOTES -->
 			<div class="form-group row">
-                            <label for="order_comments" class="col-3 col-form-label">Comments</label>
+                            <label for="orderComments" class="col-3 col-form-label">Comments</label>
                             <div class="col-9">
-                                <textarea   name="order_comments" id="order_comments" class="form-control"></textarea>
+                                <textarea th:value="${customerOrder.orderComments}"  name="orderComments" id="orderComments" class="form-control"></textarea>
                             </div>
                         </div>
 						

@@ -14,6 +14,9 @@ import com.braylon.Braylon.service.CustomerOrderService;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,32 +30,30 @@ public class CustomerOrderController {
     @Autowired
     CustomerOrderService service;
     
-    @GetMapping("customerOrders")
-    public String newOrder(int id, Model model){
-     
-     CustomerOrder order = new CustomerOrder();
-     User user = service.getUserById(id);
-     List<OrderStatus> statusList = service.getUserStatuses();
-     List<Product> productList = service.getProducts();
-     List<Customer> customerList = service.getCustomer();
-     List<CustomerOrder> salesRepOrders = service.getOrdersByEmployeeId(user);
-     
-     model.addAttribute("salesRepOrder", salesRepOrders);
-     model.addAttribute("customerOrder", order);
-     model.addAttribute("customers", customerList);
-     model.addAttribute("products", productList);
-     model.addAttribute("statuses", statusList);
-     model.addAttribute("user", user);
-
-        return "customerOrders";    
+     @GetMapping("/customerorders")
+        public String newOrder(@AuthenticationPrincipal UserDetails currentUser, Model model) {
+        CustomerOrder order = new CustomerOrder();
+        int num = Integer.parseInt(currentUser.getUsername());
+        User user = service.getUserById(num);
+        List<OrderStatus> statusList = service.getStatuses();
+        List<Product> productList = service.getProducts();
+        List<Customer> customerList = service.getCustomer();
+        List<CustomerOrder> salesRepOrders = service.getOrdersByEmployeeId(user);
+        model.addAttribute("salesRepOrder", salesRepOrders);
+        model.addAttribute("customerOrder", order);
+        model.addAttribute("customers", customerList);
+        model.addAttribute("products", productList);
+        model.addAttribute("statuses", statusList);
+        model.addAttribute("user", user);
+        return "customerorders";
     }
     
-    @PostMapping("customerOrders")
+    @PostMapping("customerorders")
     public String newOrder(CustomerOrder order, BindingResult result, HttpServletRequest request) {
  
        int productId = Integer.parseInt(request.getParameter("product"));
        order.setProduct(service.getProductById(productId));
-       
+        System.out.println("hello");
        int statusId = Integer.parseInt(request.getParameter("status"));
        order.setStatus(service.getStatusById(statusId));
        
@@ -64,7 +65,24 @@ public class CustomerOrderController {
        order.setCustomer(service.getCustomerById(customerId));
         
        service.saveCustomerOrder(order);
-       return "redirect:/customerOrders?employee_Id=" +user.getEmployee_id();    
+        return "redirect:/landingPage";
     }
   
+    
+    @GetMapping("customerOrderEdit")
+    public String editOrder(int id, Model model) {
+
+        CustomerOrder order = service.getOrderById(id);
+        List<OrderStatus> statusList = service.getUserStatuses();
+        List<Product> productList = service.getProducts();
+        List<Customer> customerList = service.getCustomer();
+
+        model.addAttribute("order", order);
+        model.addAttribute("statuses", statusList);
+        model.addAttribute("products", productList);
+        model.addAttribute("customers", customerList);
+        
+        return "customerOrders/customerOrderEdit";
+    }
+
 }
