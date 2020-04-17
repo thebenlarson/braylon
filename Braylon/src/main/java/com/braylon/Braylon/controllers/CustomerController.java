@@ -1,14 +1,19 @@
 package com.braylon.Braylon.controllers;
 
-import com.braylon.Braylon.entities.Customer;
-import com.braylon.Braylon.entities.CustomerOrder;
-import com.braylon.Braylon.entities.State;
-import com.braylon.Braylon.service.CustomerService;
-import com.braylon.Braylon.service.StateService;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
 import javax.validation.Valid;
+
+import com.braylon.Braylon.entities.Customer;
+import com.braylon.Braylon.entities.CustomerOrder;
+import com.braylon.Braylon.entities.State;
+import com.braylon.Braylon.entities.User;
+import com.braylon.Braylon.repositories.UserRepo;
+import com.braylon.Braylon.service.CustomerService;
+import com.braylon.Braylon.service.StateService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,13 +38,15 @@ public class CustomerController {
     @Autowired
     private StateService stateService;
 
+    @Autowired
+    private UserRepo userRepo;
     /**
      *
      * shows the customer list and create customer form
      */
-    @GetMapping("customers")
+    @GetMapping("/customers")
     public String showCustomerList(@AuthenticationPrincipal UserDetails user, Model model) {
-        
+    
         //getting the string id of a user and converting it to a number
         int userId = Integer.parseInt(user.getUsername());
         
@@ -54,8 +61,8 @@ public class CustomerController {
         // if model does not have a single customer
         // create a new empty customer (blank fields)
         if (!model.containsAttribute("customer")) {
-
-            //filler space, fills when it's empty
+            User currentUser = userRepo.findUserByUsername(user.getUsername());
+            model.addAttribute("currentUser", currentUser);
             model.addAttribute("customer", new Customer());
         }
 
@@ -71,14 +78,14 @@ public class CustomerController {
      * creating a new customer this method can redirect user to the
      * "showCustomerList" method
      */
-    @PostMapping("customers")
+    @PostMapping("/customers")
     public String addCustomer(@Valid Customer customer, BindingResult result, RedirectAttributes redirAttr) {
 
         // for validation BindingResult (erros in validation)
         if (result.hasErrors()) {
 
             // Add customer to the model 
-            redirAttr.addFlashAttribute("org.springframework.validation.BindingResult.customer", result);
+            redirAttr.addFlashAttribute("result", result);
             redirAttr.addFlashAttribute("customer", customer);
 
             // Redirect
@@ -90,7 +97,7 @@ public class CustomerController {
         // Flag 'created' to true so a message appears on the view
         redirAttr.addFlashAttribute("created", true);
 
-        return "redirect:/index"; //spoke with Amir and changed this
+        return "redirect:/customers"; 
 
     }
 
@@ -99,7 +106,7 @@ public class CustomerController {
      * editing a existing customer
      *
      */
-    @GetMapping("customer/{id}/edit")
+    @GetMapping("customer/{id}")
     public String showEditForm(@PathVariable("id") int id, Model model) {
 
         // Find customer by id
@@ -129,14 +136,14 @@ public class CustomerController {
 
             }
             
-            model.addAttribute("state", states);
+            model.addAttribute("states", states);
 
             // Show the edit form
-            return "customer.html";
+            return "customerInfo/view";
         }
 
         // Redirect to the view
-        return "redirect:/customers";
+        return "redirect:customerInfo/view";
     }
     
     
@@ -159,7 +166,7 @@ public class CustomerController {
             redirAttr.addFlashAttribute("customer", customer);
 
             // Redirect
-            return "redirect:/customer/" + id + "/edit";
+            return "redirect:/customer/" + id ;
         }
 
         this.customerService.save(customer);
@@ -167,7 +174,7 @@ public class CustomerController {
         // view appears with 'updated' message 
         redirAttr.addFlashAttribute("updated", true);
 
-        return "redirect:/customers";
+        return "redirect:/customer/" + id;
 
     }
     
